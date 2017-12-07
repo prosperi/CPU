@@ -59,6 +59,25 @@ public class ALU {
         }
     }
 
+    public void eor () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- EOR ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        String orr = Helper.EOR(_source_a.binary(), _source_b);
+
+        System.out.println("EOR:\t" + orr);
+
+        try {
+            _dest_c.load(orr);
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform exclusive or operation");
+            System.out.println(e);
+        }
+    }
+
     public void add () {
         String _source_b =  _bus.binary();
 
@@ -111,16 +130,19 @@ public class ALU {
     public void exec (String control) {
         switch (control) {
             case "0000":
-                and();
-                break;
-            case "0001":
-                orr();
-                break;
-            case "0010":
                 add();
                 break;
-            case "0110":
+            case "0001":
                 sub();
+                break;
+            case "0010":
+                and();
+                break;
+            case "0011":
+                orr();
+                break;
+            case "0100":
+                eor();
                 break;
             default:
                 break;

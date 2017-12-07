@@ -89,13 +89,17 @@ public class Controller {
         control_memory[21] = new SUB1();
         control_memory[22] = new SUB2();
 
-        control_memory[25] = new AND0();
-        control_memory[26] = new AND1();
-        control_memory[27] = new AND2();
+        control_memory[35] = new AND0();
+        control_memory[36] = new AND1();
+        control_memory[37] = new AND2();
 
-        control_memory[30] = new ORR0();
-        control_memory[31] = new ORR1();
-        control_memory[32] = new ORR2();
+        control_memory[40] = new ORR0();
+        control_memory[41] = new ORR1();
+        control_memory[42] = new ORR2();
+
+        control_memory[45] = new EOR0();
+        control_memory[46] = new EOR1();
+        control_memory[47] = new EOR2();
 
     }
 
@@ -252,7 +256,7 @@ public class Controller {
                 int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
-                data_path.alu.exec("0010");
+                data_path.alu.exec("0000");
 
                 System.out.println("Result:\t" + data_path.C.binary());
             } catch (Exception e) {
@@ -321,7 +325,7 @@ public class Controller {
                 int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
-                data_path.alu.exec("0110");
+                data_path.alu.exec("0001");
 
                 System.out.println("Result:\t" + data_path.C.binary());
             } catch (Exception e) {
@@ -389,7 +393,7 @@ public class Controller {
                 int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
-                data_path.alu.exec("0000");
+                data_path.alu.exec("0010");
 
                 System.out.println("Result:\t" + data_path.C.binary());
             } catch (Exception e) {
@@ -458,7 +462,7 @@ public class Controller {
                 int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
-                data_path.alu.exec("0001");
+                data_path.alu.exec("0011");
 
                 System.out.println("Result:\t" + data_path.C.binary());
             } catch (Exception e) {
@@ -482,6 +486,75 @@ public class Controller {
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
                 System.out.println("Controller was not able to finish ORR instruction");
+                System.out.println(e);
+            }
+
+        }
+
+        public int advance () {
+            return START;
+        }
+    }
+
+
+    /* -------------------------------------------------- EOR ------------------------------------------------------*/
+
+    public class EOR0 extends RTN {
+        public String toString () {
+            return "EOR0";
+        }
+
+        public void execute () {
+            try {
+                int source = data_path.IR.decimal(7, 0);
+                data_path.master_bus.store(data_path.bank.decimal(source));
+                data_path.B.load();
+
+                System.out.println("B: " + data_path.B.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        public int advance () {
+            return NEXT;
+        }
+    }
+
+    public class EOR1 extends RTN {
+        public String toString () {
+            return "EOR1";
+        }
+
+        public void execute () {
+            try {
+                int source = data_path.IR.decimal(15, 8);
+                data_path.master_bus.store(data_path.bank.decimal(source));
+
+                data_path.alu.exec("0100");
+
+                System.out.println("Result:\t" + data_path.C.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        public int advance () {
+            return NEXT;
+        }
+    }
+
+    public class EOR2 extends RTN {
+        public String toString () {
+            return "EOR2";
+        }
+
+        public void execute () {
+            try {
+                int dest = data_path.IR.decimal(23, 16);
+                data_path.bank.load(dest, data_path.C.binary());
+            } catch (Exception e) {
+                System.out.println("Controller was not able to finish EOR instruction");
                 System.out.println(e);
             }
 

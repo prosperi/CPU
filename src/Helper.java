@@ -41,11 +41,8 @@ public final class Helper {
     public static String  SUB (String a, String b) {
         String output;
 
-        System.out.println("1) B:\t" + b);
         b = NEGATE(b);
-        System.out.println("2) B:\t" + b);
         b = ADD(b, ONE());
-        System.out.println("3) B:\t" + b);
 
         output = ADD(a, b);
 
@@ -84,9 +81,18 @@ public final class Helper {
         return output;
     }
 
-    public static String NOR (String a, String b) {
+    public static String EOR (String a, String b) {
         String output = "";
 
+        char tmp_a, tmp_b;
+
+        for (int i = 0; i < _wordsize; i++) {
+            tmp_a = a.charAt(i);
+            tmp_b = b.charAt(i);
+
+            if ((tmp_a == '1' && tmp_b == '1') || (tmp_a == '0' && tmp_b == '0')) output += '0';
+            else output += '1';
+        }
 
         return output;
     }
