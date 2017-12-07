@@ -9,35 +9,36 @@ public class Flags {
         _n = false;
     }
 
-    public void z (boolean t) {
-        _z = t;
+    public void z () {
+        _z = true;
     }
 
-    public boolean z () {
-        return _z;
+    public void c () {
+        _c = true;
     }
 
-    public void c (boolean t) {
-        _c = t;
+    public void v () {
+        _v = true;
     }
 
-    public boolean c () {
-        return _c;
+    public void n () {
+        _n = true;
     }
 
-    public void v (boolean t) {
-        _v = t;
+    public void reset () {
+        _z = false;
+        _c = false;
+        _v = false;
+        _n = false;
     }
 
-    public boolean v () {
-        return _v;
+    public String toString () {
+        String output = "";
+
+        output = "Z:  " + _z + "\tC:  " + _c + "\tV:  " + _v + "\tN:  " + _n;
+
+        return output;
     }
 
-    public void n (boolean t) {
-        _n = t;
-    }
 
-    public boolean n () {
-        return _n;
-    }
 }

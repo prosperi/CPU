@@ -3,6 +3,7 @@ public class ALU {
     private Register _source_a, _dest_c;
     private Bus _bus;
     private int _wordsize;
+    private Flags _flags;
 
     public ALU (int wordsize) {
         _wordsize = wordsize;
@@ -18,6 +19,10 @@ public class ALU {
 
     public void dest_c (Register dest) {
         _dest_c = dest;
+    }
+
+    public void flags (Flags f) {
+        _flags = f;
     }
 
     public void and () {
@@ -66,19 +71,57 @@ public class ALU {
         System.out.println("A:\t" + _source_a.binary());
         System.out.println("Bus:\t" + _source_b);
 
-        String orr = Helper.EOR(_source_a.binary(), _source_b);
+        String eor = Helper.EOR(_source_a.binary(), _source_b);
 
-        System.out.println("EOR:\t" + orr);
+        System.out.println("EOR:\t" + eor);
 
         try {
-            _dest_c.load(orr);
+            _dest_c.load(eor);
         } catch (Exception e) {
             System.out.println("ALU was not able to perform exclusive or operation");
             System.out.println(e);
         }
     }
 
-    public void add () {
+    public void lsl () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- LSL ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        String lsl = Helper.LSL(_source_a.binary(), _source_b);
+
+        System.out.println("LSL:\t" + lsl);
+
+        try {
+            _dest_c.load(lsl);
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform left shift operation");
+            System.out.println(e);
+        }
+    }
+
+    public void lsr () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- LSR ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        String lsr = Helper.LSR(_source_a.binary(), _source_b);
+
+        System.out.println("LSR:\t" + lsr);
+
+        try {
+            _dest_c.load(lsr);
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform right shift operation");
+            System.out.println(e);
+        }
+    }
+
+    public void add (boolean flags) {
         String _source_b =  _bus.binary();
 
         System.out.println("----------- Addition ----------");
@@ -86,8 +129,16 @@ public class ALU {
         System.out.println("Bus:\t" + _source_b);
 
         String sum = Helper.ADD(_source_a.binary(), _source_b);
-
         System.out.println("Sum:\t" + sum);
+
+        if (flags) {
+            if (sum.length() > _wordsize)  _flags.v();
+            if (sum.equals(Helper.ZERO())) _flags.z();
+            if (sum.charAt(0) == '1')      _flags.n();
+            System.out.println(_flags);
+        }
+
+        sum = sum.substring(sum.length() - _wordsize, _wordsize);
 
         try {
             _dest_c.load(sum);
@@ -99,7 +150,7 @@ public class ALU {
 
     }
 
-    public void sub () {
+    public void sub (boolean flags) {
         String _source_b =  _bus.binary();
 
         System.out.println("----------- Substraction ----------");
@@ -107,8 +158,16 @@ public class ALU {
         System.out.println("Bus:\t" + _source_b);
 
         String dif = Helper.SUB(_source_b, _source_a.binary());
-
         System.out.println("Difference:\t" + dif);
+
+        if (flags) {
+            if (dif.length() > _wordsize)  _flags.v();
+            if (dif.equals(Helper.ZERO())) _flags.z();
+            if (dif.charAt(0) == '1')      _flags.n();
+            System.out.println(_flags);
+        }
+
+        dif = dif.substring(dif.length() - _wordsize, _wordsize);
 
         try {
             _dest_c.load(dif);
@@ -123,17 +182,13 @@ public class ALU {
 
     }
 
-    public void nor () {
-
-    }
-
-    public void exec (String control) {
+    public void exec (String control, boolean flags) {
         switch (control) {
             case "0000":
-                add();
+                add(flags);
                 break;
             case "0001":
-                sub();
+                sub(flags);
                 break;
             case "0010":
                 and();
@@ -143,6 +198,12 @@ public class ALU {
                 break;
             case "0100":
                 eor();
+                break;
+            case "0101":
+                lsl();
+                break;
+            case "0110":
+                lsr();
                 break;
             default:
                 break;

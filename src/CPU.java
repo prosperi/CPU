@@ -19,6 +19,7 @@ public class CPU extends JPanel implements ActionListener {
     public  RegisterBank  bank;
     public  Bus           master_bus;
     public  ALU           alu;
+    public  Flags         flags;
 
     private int           clock_ticks;
     private int           general_purpose_reg_cnt;
@@ -63,6 +64,7 @@ public class CPU extends JPanel implements ActionListener {
         wordsize                = wordSize;
         main_memory             = mem;
         controler               = new Controller(this);
+        flags                   = new Flags();
 
         master_bus = new Bus(wordsize);
         alu        = new ALU(wordsize);
@@ -101,6 +103,7 @@ public class CPU extends JPanel implements ActionListener {
         alu.source_a(B);
         alu.dest_c(C);
         alu.bus(master_bus);
+        alu.flags(flags);
 
 
         reset();           // clear everything to zero
@@ -162,6 +165,8 @@ public class CPU extends JPanel implements ActionListener {
             IR.store(0x0);
             MA.store(0x0);
             MD.store(0x0);
+
+            flags.reset();
 
             for(int cnt = 0; cnt < general_purpose_reg_cnt; cnt++) {
                 bank.store(0x0, cnt);

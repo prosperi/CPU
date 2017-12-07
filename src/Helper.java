@@ -9,9 +9,6 @@ public final class Helper {
     public static String  ADD (String a, String b) {
         String output = "";
 
-        System.out.println("A:\t" + a);
-        System.out.println("B:\t" + b);
-
         a = new StringBuilder(a).reverse().toString();
         b = new StringBuilder(b).reverse().toString();
 
@@ -97,6 +94,38 @@ public final class Helper {
         return output;
     }
 
+    public static String LSL (String a, String b) {
+        String output = "";
+
+        int size = Integer.parseInt(a, 2);
+
+        for (int i = 0; i < size; i++) {
+            output += '0';
+        }
+
+        output = b.substring(size, b.length()) + output;
+
+        System.out.println("OUTPUT:\t" + output);
+
+        return output;
+    }
+
+    public static String LSR (String a, String b) {
+        String output = "";
+
+        int size = Integer.parseInt(a, 2);
+
+        for (int i = 0; i < size; i++) {
+            output += '0';
+        }
+
+        output += b.substring(0, b.length() - size);
+
+        System.out.println("OUTPUT:\t" + output);
+
+        return output;
+    }
+
     public static String NEGATE (String a) {
         String output = "";
 
@@ -115,6 +144,16 @@ public final class Helper {
         }
 
         output += '1';
+
+        return output;
+    }
+
+    public static String ZERO () {
+        String output = "";
+
+        for (int i = 0; i < _wordsize; i++) {
+            output += '0';
+        }
 
         return output;
     }
