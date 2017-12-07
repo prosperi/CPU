@@ -3,10 +3,10 @@ public class Flags {
     private boolean _z, _c, _v, _n;
 
     public Flags () {
-      _z = false;
-      _c = false;
-      _v = false;
-      _n = false;
+        _z = false;
+        _c = false;
+        _v = false;
+        _n = false;
     }
 
     public void z (boolean t) {

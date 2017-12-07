@@ -53,7 +53,6 @@ public class ALU {
 
         try {
             _dest_c.load(orr);
-            System.out.println(_dest_c.binary());
         } catch (Exception e) {
             System.out.println("ALU was not able to perform or operation");
             System.out.println(e);

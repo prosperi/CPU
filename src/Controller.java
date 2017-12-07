@@ -50,7 +50,7 @@ public class Controller {
             case CMDNAME: {
                 try {
                     System.out.println(data_path.IR);
-                    current_entry = (data_path.IR.decimal(15,12) + 1) * 5;
+                    current_entry = (data_path.IR.decimal(31,24) + 1) * 5;
                     System.err.println("--------");
                     System.err.println(data_path.IR.binary());
                     System.err.println(current_entry);
@@ -139,7 +139,7 @@ public class Controller {
             return new String("Fetch1");
         }
         public void execute() {
-            data_path.PC.increment(2);
+            data_path.PC.increment(4);
             data_path.main_memory.memory_load();
         }
         public int advance() {
@@ -198,10 +198,10 @@ public class Controller {
             // | op |dest| immed  |
 
             try {
-                int source      = data_path.IR.decimal(7, 0);
-                int destination = data_path.IR.decimal(11, 8);
+                int source      = data_path.IR.decimal(15, 0);
+                int destination = data_path.IR.decimal(23, 16);
 
-
+                System.out.println("Source: " + source);
                 data_path.master_bus.store(source);
                 data_path.bank.load(destination);
 
@@ -227,7 +227,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(3, 0);
+                int source = data_path.IR.decimal(7, 0);
                 data_path.master_bus.store(data_path.bank.decimal(source));
                 data_path.B.load();
 
@@ -249,7 +249,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(7, 4);
+                int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
                 data_path.alu.exec("0010");
@@ -272,7 +272,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int dest = data_path.IR.decimal(11, 8);
+                int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
                 System.out.println("Controller was not able to finish ADD instruction");
@@ -296,7 +296,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(3, 0);
+                int source = data_path.IR.decimal(7, 0);
                 data_path.master_bus.store(data_path.bank.decimal(source));
                 data_path.B.load();
 
@@ -318,7 +318,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(7, 4);
+                int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
                 data_path.alu.exec("0110");
@@ -341,7 +341,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int dest = data_path.IR.decimal(11, 8);
+                int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
                 System.out.println("Controller was not able to finish ADD instruction");
@@ -364,7 +364,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(3, 0);
+                int source = data_path.IR.decimal(7, 0);
                 data_path.master_bus.store(data_path.bank.decimal(source));
                 data_path.B.load();
 
@@ -386,7 +386,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(7, 4);
+                int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
                 data_path.alu.exec("0000");
@@ -409,7 +409,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int dest = data_path.IR.decimal(11, 8);
+                int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
                 System.out.println("Controller was not able to finish AND instruction");
@@ -433,7 +433,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(3, 0);
+                int source = data_path.IR.decimal(7, 0);
                 data_path.master_bus.store(data_path.bank.decimal(source));
                 data_path.B.load();
 
@@ -455,7 +455,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int source = data_path.IR.decimal(7, 4);
+                int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
                 data_path.alu.exec("0001");
@@ -478,7 +478,7 @@ public class Controller {
 
         public void execute () {
             try {
-                int dest = data_path.IR.decimal(11, 8);
+                int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
                 System.out.println("Controller was not able to finish ORR instruction");

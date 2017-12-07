@@ -39,7 +39,7 @@ public class CPU extends JPanel implements ActionListener {
         button_reset = new JButton("Reset");
         button_reset.addActionListener(this);
 
-        textArea = new JTextArea(30, 30);
+        textArea = new JTextArea(30, 50);
         textArea.setFont(new Font("Courier", Font.PLAIN, 16));
         textArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(textArea);
@@ -96,6 +96,7 @@ public class CPU extends JPanel implements ActionListener {
 
         main_memory.set_address_register(MA);
         main_memory.set_data_register(MD);
+
 
         alu.source_a(B);
         alu.dest_c(C);

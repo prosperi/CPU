@@ -120,11 +120,11 @@ public class RAM extends JPanel implements ActionListener {
             while (sc.hasNextLine()) {
 
                 curr_line = sc.nextLine();               // get next line
-                // System.out.println(">>>>" + curr_line + "<<<<");
+                 System.out.println(">>>>" + curr_line + "<<<<");
 
                 if(curr_line.length() == 0) continue;    // skip blank lines
 
-                for(int cnt = 0; cnt <= byte_width; cnt += 2 ) {
+                for(int cnt = 0; cnt < byte_width * 2; cnt += 2 ) {
                     memory[(line_cnt * byte_width) + (cnt / 2)].store(
                             String.format("%c%c",
                                     curr_line.charAt(cnt),
@@ -208,6 +208,7 @@ public class RAM extends JPanel implements ActionListener {
 
         last_access = address;
 
+
         for(int cnt = 0; cnt < byte_width; cnt++) {
 
             result += memory[address + cnt].hex();
@@ -243,7 +244,7 @@ public class RAM extends JPanel implements ActionListener {
     public void memory_load() {
 
         int address = address_register.decimal();
-        // System.err.println(address);
+
         // System.err.println(getMemoryWord(address));
         data_register.store(getMemoryWord_hex(address));
     }

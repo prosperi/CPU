@@ -16,14 +16,14 @@ public class Simulation {
         //creating and showing this application's GUI.
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                mem = RAM.createAndShowGUI(32, 0x2);
+                mem = RAM.createAndShowGUI(64, 0x4);
             }
         });
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
 
-                CPU.createAndShowGUI(16, 8, mem);
-                Helper.wordsize(16);
+                CPU.createAndShowGUI(32, 8, mem);
+                Helper.wordsize(32);
             }
         });
     }

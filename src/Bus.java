@@ -74,7 +74,7 @@ public class Bus {
 
     public void store(int value) throws Exception {
 
-        // System.err.println("--" + value + "--");
+        System.err.println("--" + value + "--");
         if (value < 0 && 255 < value)
             throw new Exception("Passed value is too large for Bus");
 
