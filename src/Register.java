@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.ErrorCodeResponseException;
+
 /***
  * Register class for implementing memory components
  * that hang together thru the bus.
@@ -35,6 +37,16 @@ public class Register {
 
         for(int cnt = 0; cnt < wordsize; cnt++) {
             bits[cnt] = source.bits[cnt];
+        }
+    }
+
+    public void load (String source) throws Exception{
+
+        if (source.length() != wordsize)
+            throw new Exception("Length of provided source does not equal to wordsize");
+
+        for (int i = source.length() - 1; i >= 0; i--) {
+            bits[i] = Integer.parseInt(source.charAt(wordsize - i - 1) + "");
         }
     }
 

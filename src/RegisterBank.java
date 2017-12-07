@@ -47,6 +47,14 @@ public class RegisterBank {
         registers[register_id].load();
     }
 
+    public void load(int register_id, String source) throws Exception {
+
+        if(register_id < 0 || register_cnt <= register_id)
+            throw new Exception("RegisterBank binary register_id out of range.");
+
+        registers[register_id].load(source);
+    }
+
     public void store(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -80,10 +88,17 @@ public class RegisterBank {
         return registers[register_id].binary();
     }
 
+    public int decimal(int register_id) throws Exception {
+        if (register_id < 0 || register_cnt <= register_id)
+            throw new Exception("RegisterBank decimal register_id out of range.");
+
+        return registers[register_id].decimal();
+    }
+
     public String hex(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
-            throw new Exception("RegisterBank binary register_id out of range.");
+            throw new Exception("RegisterBank hex register_id out of range.");
 
         return registers[register_id].hex();
     }
@@ -97,6 +112,9 @@ public class RegisterBank {
     }
 
     public void store(String value, int register_id) throws Exception {
+
+        System.out.println("Storing:\tID:\t" + register_id +"\tValue\t:" + value);
+
 
         if(register_id < 0 || register_cnt <= register_id)
             throw new Exception("RegisterBank store(str) register_id out of range.");

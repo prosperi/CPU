@@ -18,13 +18,14 @@ public class CPU extends JPanel implements ActionListener {
     public  Register      PC, IR, MA, MD, B, C;
     public  RegisterBank  bank;
     public  Bus           master_bus;
+    public  ALU           alu;
 
     private int           clock_ticks;
     private int           general_purpose_reg_cnt;
     private int           wordsize;
 
     public  RAM           main_memory;
-    private Controller     controler;
+    private Controller    controler;
 
     /* Primary constructor */
     public CPU(int wordSize, int register_cnt, RAM mem) {
@@ -64,11 +65,15 @@ public class CPU extends JPanel implements ActionListener {
         controler               = new Controller(this);
 
         master_bus = new Bus(wordsize);
+        alu        = new ALU(wordsize);
 
         PC         = new Register(wordsize);
         IR         = new Register(wordsize);
         MA         = new Register(wordsize);
         MD         = new Register(wordsize);
+
+        B          = new Register(wordsize);
+        C          = new Register(wordsize);
 
         bank       = new RegisterBank(wordsize, general_purpose_reg_cnt);
 
@@ -84,8 +89,17 @@ public class CPU extends JPanel implements ActionListener {
         MD.set_source_bus(master_bus);
         MD.set_destination_bus(master_bus);
 
+        B.set_destination_bus(master_bus);
+        B.set_source_bus(master_bus);
+        C.set_destination_bus(master_bus);
+        C.set_source_bus(master_bus);
+
         main_memory.set_address_register(MA);
         main_memory.set_data_register(MD);
+
+        alu.source_a(B);
+        alu.dest_c(C);
+        alu.bus(master_bus);
 
 
         reset();           // clear everything to zero

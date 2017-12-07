@@ -21,7 +21,9 @@ public class Simulation {
         });
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
+
                 CPU.createAndShowGUI(16, 8, mem);
+                Helper.wordsize(16);
             }
         });
     }
