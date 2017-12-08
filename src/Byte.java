@@ -4,7 +4,7 @@
  */
 public class Byte {
 
-    /* Object data fields */
+    /* Object input fields */
     private int bits[];
 
     /* Primary constructor */

@@ -6,7 +6,7 @@ import com.sun.javaws.exceptions.ErrorCodeResponseException;
  */
 public class Register {
 
-    /* Object data fields */
+    /* Object input fields */
     private int bits[];
     private int wordsize;
 

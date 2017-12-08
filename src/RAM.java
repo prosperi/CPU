@@ -17,7 +17,7 @@ import java.awt.event.*;
  */
 public class RAM extends JPanel implements ActionListener {
 
-    /* Object data fields */
+    /* Object input fields */
     protected JButton button;
 
     protected JTextArea textArea;
@@ -66,7 +66,7 @@ public class RAM extends JPanel implements ActionListener {
             memory[cnt] = new Byte();
         }
 
-        load_memory("test_file.as");  // load memory file
+        load_memory("./input/AND.as");  // load memory file
         refresh_display();            // redraw the display
     }
 

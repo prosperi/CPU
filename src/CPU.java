@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 public class CPU extends JPanel implements ActionListener {
 
-    /* Object data fields */
+    /* Object input fields */
     protected JButton button_refresh;
     protected JButton button_clock_tick;
     protected JButton button_reset;

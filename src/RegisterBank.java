@@ -6,7 +6,7 @@
  */
 public class RegisterBank {
 
-    /* Object data fields */
+    /* Object input fields */
     private Register registers[];
 
     private int wordsize;

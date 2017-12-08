@@ -7,7 +7,7 @@ import javax.swing.*;
  */
 public class Simulation {
 
-    /* Object data fields */
+    /* Object input fields */
     public static RAM    mem;
 
     public static void main(String[] args) {

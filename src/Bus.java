@@ -4,7 +4,7 @@
  */
 public class Bus {
 
-    /* Object data fields */
+    /* Object input fields */
     public  int bits[];
     private int wordsize;
 
