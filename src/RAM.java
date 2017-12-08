@@ -66,7 +66,7 @@ public class RAM extends JPanel implements ActionListener {
             memory[cnt] = new Byte();
         }
 
-        load_memory("./input/STUR.as");  // load memory file
+        load_memory("./input/B.as");  // load memory file
         refresh_display();            // redraw the display
     }
 

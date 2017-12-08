@@ -157,6 +157,11 @@ public class Controller {
         control_memory[108] = new STUR3();
         control_memory[109] = new STUR4();
 
+        control_memory[185] = new B0();
+        control_memory[186] = new B1();
+        control_memory[187] = new B2();
+
+
     }
 
     public class RTN {
@@ -1092,4 +1097,66 @@ public class Controller {
             return START;
         }
     }
+
+    /* -------------------------------------------------- B ------------------------------------------------------*/
+
+    public class B0 extends RTN {
+
+        public String toString() {
+            return new String("B0");
+        }
+        public void execute() {
+            try {
+                int source = data_path.IR.decimal(23, 0);
+
+                data_path.master_bus.store(source - 1);
+                data_path.B.load();
+
+                System.out.println("B: " + data_path.B.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        public int advance() {
+            return NEXT;
+        }
+
+    }
+
+    public class B1 extends RTN {
+        public String toString () {
+            return new String("B1");
+        }
+
+        public void execute () {
+            try {
+                data_path.master_bus.store(2);
+
+                data_path.alu.exec("0101", false);
+
+                System.out.println("Result:\t" + data_path.C.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        public int advance() {
+            return NEXT;
+        }
+    }
+
+    public class B2 extends RTN {
+
+        public String toString () {
+            return new String("B2");
+        }
+        public void execute() {
+            data_path.PC.increment(data_path.C.decimal());
+        }
+        public int advance() {
+            return START;
+        }
+
+    }
+
 }
