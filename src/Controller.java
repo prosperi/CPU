@@ -81,33 +81,33 @@ public class Controller {
         control_memory[5] = new NOP();
         control_memory[10] = new LOADI0();
 
-        control_memory[15] = new ADD0();
-        control_memory[16] = new ADD1();
-        control_memory[17] = new ADD2();
+        control_memory[15] = new ADD0("ADD", false);
+        control_memory[16] = new ADD1("ADD", false);
+        control_memory[17] = new ADD2("ADD");
 
-        control_memory[20] = new SUB0();
-        control_memory[21] = new SUB1();
-        control_memory[22] = new SUB2();
+        control_memory[20] = new SUB0("SUB", false);
+        control_memory[21] = new SUB1("SUB", false);
+        control_memory[22] = new SUB2("SUB");
 
-        control_memory[25] = new ADDS0();
-        control_memory[26] = new ADDS1();
-        control_memory[27] = new ADDS2();
+        control_memory[25] = new ADD0("ADDS", false);
+        control_memory[26] = new ADD1("ADDS", true);
+        control_memory[27] = new ADD2("ADDS");
 
-        control_memory[30] = new SUBS0();
-        control_memory[31] = new SUBS1();
-        control_memory[32] = new SUBS2();
+        control_memory[30] = new SUB0("SUBS", false);
+        control_memory[31] = new SUB1("SUBS", true);
+        control_memory[32] = new SUB2("SUBS");
 
-        control_memory[35] = new AND0();
-        control_memory[36] = new AND1();
-        control_memory[37] = new AND2();
+        control_memory[35] = new AND0("AND", false);
+        control_memory[36] = new AND1("AND");
+        control_memory[37] = new AND2("AND");
 
-        control_memory[40] = new ORR0();
-        control_memory[41] = new ORR1();
-        control_memory[42] = new ORR2();
+        control_memory[40] = new ORR0("ORR", false);
+        control_memory[41] = new ORR1("ORR");
+        control_memory[42] = new ORR2("ORR");
 
-        control_memory[45] = new EOR0();
-        control_memory[46] = new EOR1();
-        control_memory[47] = new EOR2();
+        control_memory[45] = new EOR0("EOR", false);
+        control_memory[46] = new EOR1("EOR");
+        control_memory[47] = new EOR2("EOR");
 
         control_memory[50] = new LSL0();
         control_memory[51] = new LSL1();
@@ -117,17 +117,45 @@ public class Controller {
         control_memory[56] = new LSR1();
         control_memory[57] = new LSR2();
 
-        control_memory[65] = new ADDI0();
-        control_memory[66] = new ADDI1();
-        control_memory[67] = new ADDI2();
+        control_memory[65] = new ADD0("ADDI", true);
+        control_memory[66] = new ADD1("ADDI", false);
+        control_memory[67] = new ADD2("ADDI");
 
-        control_memory[70] = new SUBI0();
-        control_memory[71] = new SUBI1();
-        control_memory[72] = new SUBI2();
+        control_memory[70] = new SUB0("SUBI", true);
+        control_memory[71] = new SUB1("SUBI", false);
+        control_memory[72] = new SUB2("SUBI");
 
-        control_memory[85] = new ANDI0();
-        control_memory[86] = new ANDI1();
-        control_memory[87] = new ANDI2();
+        control_memory[75] = new ADD0("ADDIS", true);
+        control_memory[76] = new ADD1("ADDIS", true);
+        control_memory[77] = new ADD2("ADDIS");
+
+        control_memory[80] = new SUB0("SUBIS", true);
+        control_memory[81] = new SUB1("SUBIS", true);
+        control_memory[82] = new SUB2("SUBIS");
+
+        control_memory[85] = new AND0("ANDI", true);
+        control_memory[86] = new AND1("ANDI");
+        control_memory[87] = new AND2("ANDI");
+
+        control_memory[90] = new ORR0("ORRI", true);
+        control_memory[91] = new ORR1("ORRI");
+        control_memory[92] = new ORR2("ORRI");
+
+        control_memory[95] = new EOR0("EORI", true);
+        control_memory[96] = new EOR1("EORI");
+        control_memory[97] = new EOR2("EORI");
+
+        control_memory[100] = new LDUR0();
+        control_memory[101] = new LDUR1();
+        control_memory[102] = new LDUR2();
+        control_memory[103] = new LDUR3();
+        control_memory[104] = new LDUR4();
+
+        control_memory[105] = new STUR0();
+        control_memory[106] = new STUR1();
+        control_memory[107] = new STUR2();
+        control_memory[108] = new STUR3();
+        control_memory[109] = new STUR4();
 
     }
 
@@ -252,14 +280,28 @@ public class Controller {
     /* -------------------------------------------------- ADD ------------------------------------------------------*/
 
     public class ADD0 extends RTN {
+
+        private String _type;
+        private boolean _immediate;
+
+        public ADD0 (String type, boolean immediate) {
+            _type = type;
+            _immediate = immediate;
+        }
+
         public String toString () {
-            return "ADD0";
+            return _type + "0";
         }
 
         public void execute () {
             try {
                 int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
+
+                if (_immediate)
+                    data_path.master_bus.store(source);
+                else
+                    data_path.master_bus.store(data_path.bank.decimal(source));
+
                 data_path.B.load();
 
                 System.out.println("B: " + data_path.B.binary());
@@ -274,8 +316,17 @@ public class Controller {
     }
 
     public class ADD1 extends RTN {
+
+        private String _type;
+        private boolean _flags;
+
+        public ADD1 (String type, boolean flags) {
+            _type = type;
+            _flags = flags;
+        }
+
         public String toString () {
-            return "ADD1";
+            return _type + "1";
         }
 
         public void execute () {
@@ -283,7 +334,7 @@ public class Controller {
                 int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
-                data_path.alu.exec("0000", false);
+                data_path.alu.exec("0000", _flags);
 
                 System.out.println("Result:\t" + data_path.C.binary());
             } catch (Exception e) {
@@ -297,8 +348,14 @@ public class Controller {
     }
 
     public class ADD2 extends RTN {
+        private String _type;
+
+        public ADD2 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "ADD2";
+            return _type + "2";
         }
 
         public void execute () {
@@ -306,10 +363,9 @@ public class Controller {
                 int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
-                System.out.println("Controller was not able to finish ADD.txt instruction");
+                System.out.println("Controller was not able to finish " + _type + " instruction");
                 System.out.println(e);
             }
-
         }
 
         public int advance () {
@@ -321,14 +377,28 @@ public class Controller {
     /* -------------------------------------------------- SUB ------------------------------------------------------*/
 
     public class SUB0 extends RTN {
+
+        private String _type;
+        private boolean _immediate;
+
+        public SUB0 (String type, boolean immediate) {
+            _type = type;
+            _immediate = immediate;
+        }
+
         public String toString () {
-            return "SUB0";
+            return _type + "0";
         }
 
         public void execute () {
             try {
                 int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
+
+                if (_immediate)
+                    data_path.master_bus.store(source);
+                else
+                    data_path.master_bus.store(data_path.bank.decimal(source));
+
                 data_path.B.load();
 
                 System.out.println("B: " + data_path.B.binary());
@@ -343,8 +413,16 @@ public class Controller {
     }
 
     public class SUB1 extends RTN {
+        private String _type;
+        private boolean _flags;
+
+        public SUB1 (String type, boolean flags) {
+            _type = type;
+            _flags = flags;
+        }
+
         public String toString () {
-            return "SUB1";
+            return _type + "1";
         }
 
         public void execute () {
@@ -352,7 +430,7 @@ public class Controller {
                 int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(data_path.bank.decimal(source));
 
-                data_path.alu.exec("0001", false);
+                data_path.alu.exec("0001", _flags);
 
                 System.out.println("Result:\t" + data_path.C.binary());
             } catch (Exception e) {
@@ -366,8 +444,14 @@ public class Controller {
     }
 
     public class SUB2 extends RTN {
+        private String _type;
+
+        public SUB2 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "SUB2";
+            return _type + "2";
         }
 
         public void execute () {
@@ -375,7 +459,7 @@ public class Controller {
                 int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
-                System.out.println("Controller was not able to finish SUB instruction");
+                System.out.println("Controller was not able to finish " + _type + " instruction");
                 System.out.println(e);
             }
 
@@ -386,152 +470,29 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- ADDS ------------------------------------------------------*/
-
-    public class ADDS0 extends RTN {
-        public String toString () {
-            return "ADDS0";
-        }
-
-        public void execute () {
-            try {
-                int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
-                data_path.B.load();
-
-                System.out.println("B: " + data_path.B.binary());
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        public int advance () {
-            return NEXT;
-        }
-    }
-
-    public class ADDS1 extends RTN {
-        public String toString () {
-            return "ADDS1";
-        }
-
-        public void execute () {
-            try {
-                int source = data_path.IR.decimal(15, 8);
-                data_path.master_bus.store(data_path.bank.decimal(source));
-
-                data_path.alu.exec("0000", true);
-
-                System.out.println("Result:\t" + data_path.C.binary());
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        public int advance () {
-            return NEXT;
-        }
-    }
-
-    public class ADDS2 extends RTN {
-        public String toString () {
-            return "ADDS2";
-        }
-
-        public void execute () {
-            try {
-                int dest = data_path.IR.decimal(23, 16);
-                data_path.bank.load(dest, data_path.C.binary());
-            } catch (Exception e) {
-                System.out.println("Controller was not able to finish ADDS instruction");
-                System.out.println(e);
-            }
-
-        }
-
-        public int advance () {
-            return START;
-        }
-    }
-
-    /* -------------------------------------------------- SUBS ------------------------------------------------------*/
-
-    public class SUBS0 extends RTN {
-        public String toString () {
-            return "SUBS0";
-        }
-
-        public void execute () {
-            try {
-                int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
-                data_path.B.load();
-
-                System.out.println("B: " + data_path.B.binary());
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        public int advance () {
-            return NEXT;
-        }
-    }
-
-    public class SUBS1 extends RTN {
-        public String toString () {
-            return "SUBS1";
-        }
-
-        public void execute () {
-            try {
-                int source = data_path.IR.decimal(15, 8);
-                data_path.master_bus.store(data_path.bank.decimal(source));
-
-                data_path.alu.exec("0001", true);
-
-                System.out.println("Result:\t" + data_path.C.binary());
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        public int advance () {
-            return NEXT;
-        }
-    }
-
-    public class SUBS2 extends RTN {
-        public String toString () {
-            return "SUBS2";
-        }
-
-        public void execute () {
-            try {
-                int dest = data_path.IR.decimal(23, 16);
-                data_path.bank.load(dest, data_path.C.binary());
-            } catch (Exception e) {
-                System.out.println("Controller was not able to finish SUBS instruction");
-                System.out.println(e);
-            }
-
-        }
-
-        public int advance () {
-            return START;
-        }
-    }
 
     /* -------------------------------------------------- AND ------------------------------------------------------*/
     public class AND0 extends RTN {
+        private String _type;
+        private boolean _immediate;
+
+        public AND0 (String type, boolean immediate) {
+            _type = type;
+            _immediate = immediate;
+        }
+
         public String toString () {
-            return "AND0";
+            return _type + "0";
         }
 
         public void execute () {
             try {
                 int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
+                if (_immediate)
+                    data_path.master_bus.store(source);
+                else
+                    data_path.master_bus.store(data_path.bank.decimal(source));
+
                 data_path.B.load();
 
                 System.out.println("B: " + data_path.B.binary());
@@ -546,8 +507,14 @@ public class Controller {
     }
 
     public class AND1 extends RTN {
+        private String _type;
+
+        public AND1 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "AND1";
+            return _type + "1";
         }
 
         public void execute () {
@@ -569,8 +536,14 @@ public class Controller {
     }
 
     public class AND2 extends RTN {
+        private String _type;
+
+        public AND2 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "AND2";
+            return _type + "1";
         }
 
         public void execute () {
@@ -578,7 +551,7 @@ public class Controller {
                 int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
-                System.out.println("Controller was not able to finish AND instruction");
+                System.out.println("Controller was not able to finish " + _type + " instruction");
                 System.out.println(e);
             }
 
@@ -593,14 +566,27 @@ public class Controller {
     /* -------------------------------------------------- ORR ------------------------------------------------------*/
 
     public class ORR0 extends RTN {
+        private String _type;
+        private boolean _immediate;
+
+        public ORR0 (String type, boolean immediate) {
+            _type = type;
+            _immediate = immediate;
+        }
+
         public String toString () {
-            return "ORR0";
+            return _type + "0";
         }
 
         public void execute () {
             try {
                 int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
+
+                if (_immediate)
+                    data_path.master_bus.store(source);
+                else
+                    data_path.master_bus.store(data_path.bank.decimal(source));
+
                 data_path.B.load();
 
                 System.out.println("B: " + data_path.B.binary());
@@ -615,8 +601,14 @@ public class Controller {
     }
 
     public class ORR1 extends RTN {
+        private String _type;
+
+        public ORR1 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "ORR1";
+            return _type + "1";
         }
 
         public void execute () {
@@ -638,8 +630,14 @@ public class Controller {
     }
 
     public class ORR2 extends RTN {
+        private String _type;
+
+        public ORR2 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "ORR2";
+            return _type + "2";
         }
 
         public void execute () {
@@ -647,7 +645,7 @@ public class Controller {
                 int dest = data_path.IR.decimal(23, 16);
                 data_path.bank.load(dest, data_path.C.binary());
             } catch (Exception e) {
-                System.out.println("Controller was not able to finish ORR instruction");
+                System.out.println("Controller was not able to finish " + _type + " instruction");
                 System.out.println(e);
             }
 
@@ -662,14 +660,27 @@ public class Controller {
     /* -------------------------------------------------- EOR ------------------------------------------------------*/
 
     public class EOR0 extends RTN {
+        private String _type;
+        private boolean _immediate;
+
+        public EOR0 (String type, boolean immediate) {
+            _type = type;
+            _immediate = immediate;
+        }
+
         public String toString () {
-            return "EOR0";
+            return _type + "0";
         }
 
         public void execute () {
             try {
                 int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
+
+                if (_immediate)
+                    data_path.master_bus.store(source);
+                else
+                    data_path.master_bus.store(data_path.bank.decimal(source));
+
                 data_path.B.load();
 
                 System.out.println("B: " + data_path.B.binary());
@@ -684,8 +695,14 @@ public class Controller {
     }
 
     public class EOR1 extends RTN {
+        private String _type;
+
+        public EOR1 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "EOR1";
+            return _type + "1";
         }
 
         public void execute () {
@@ -707,8 +724,14 @@ public class Controller {
     }
 
     public class EOR2 extends RTN {
+        private String _type;
+
+        public EOR2 (String type) {
+            _type = type;
+        }
+
         public String toString () {
-            return "EOR2";
+            return _type + "1";
         }
 
         public void execute () {
@@ -864,16 +887,17 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- ADDI ------------------------------------------------------*/
 
-    public class ADDI0 extends RTN {
-        public String toString () {
-            return "ADDI0";
+    /* -------------------------------------------------- LDUR ------------------------------------------------------*/
+    public class LDUR0 extends RTN {
+
+        public String toString() {
+            return new String("LDUR0");
         }
-
-        public void execute () {
+        public void execute() {
             try {
                 int source = data_path.IR.decimal(7, 0);
+
                 data_path.master_bus.store(source);
                 data_path.B.load();
 
@@ -882,66 +906,101 @@ public class Controller {
                 System.out.println(e);
             }
         }
-
-        public int advance () {
+        public int advance() {
             return NEXT;
         }
+
     }
 
-    public class ADDI1 extends RTN {
-        public String toString () {
-            return "ADDI1";
-        }
+    public class LDUR1 extends RTN {
 
-        public void execute () {
+        public String toString() {
+            return new String("LDUR1");
+        }
+        public void execute() {
             try {
                 int source = data_path.IR.decimal(15, 8);
-                data_path.master_bus.store(data_path.bank.decimal(source));
+                source = data_path.bank.decimal(source) + 4 * data_path.B.decimal();
 
-                data_path.alu.exec("0000", false);
 
-                System.out.println("Result:\t" + data_path.C.binary());
+                data_path.master_bus.store(source);
+                data_path.C.load();
+
+                System.out.println("C: " + data_path.C.binary());
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
-
-        public int advance () {
+        public int advance() {
             return NEXT;
         }
     }
 
-    public class ADDI2 extends RTN {
-        public String toString () {
-            return "ADDI2";
-        }
+    public class LDUR2 extends RTN {
 
-        public void execute () {
+        public String toString() {
+            return new String("LDUR2");
+        }
+        public void execute() {
             try {
-                int dest = data_path.IR.decimal(23, 16);
-                data_path.bank.load(dest, data_path.C.binary());
+             data_path.MA.store(data_path.C.decimal());
             } catch (Exception e) {
-                System.out.println("Controller was not able to finish ADDI instruction");
-                System.out.println(e);
+                System.out.println("Was not able to load data in MA");
+                e.printStackTrace();
             }
 
         }
+        public int advance() {
+            return NEXT;
+        }
+    }
 
-        public int advance () {
+    public class LDUR3 extends RTN {
+
+        public String toString() {
+            return new String("LDUR3");
+        }
+        public void execute() {
+            data_path.main_memory.memory_load();
+        }
+        public int advance() {
+            return NEXT;
+        }
+    }
+
+    public class LDUR4 extends RTN {
+
+        public String toString() {
+            return new String("LDUR3");
+        }
+        public void execute() {
+            try {
+                int dest = data_path.IR.decimal(23, 16);
+                data_path.MD.store();
+
+                data_path.bank.load(dest, data_path.MD.binary());
+            } catch (Exception e) {
+                System.out.println("Was not able to perform LDUR operation");
+                e.printStackTrace();
+            }
+
+
+        }
+        public int advance() {
             return START;
         }
     }
 
-    /* -------------------------------------------------- SUBI ------------------------------------------------------*/
+    /* -------------------------------------------------- STUR ------------------------------------------------------*/
+    public class STUR0 extends RTN {
 
-    public class SUBI0 extends RTN {
-        public String toString () {
-            return "SUBI0";
+        public String toString() {
+            return new String("STUR0");
         }
-
-        public void execute () {
+        public void execute() {
             try {
                 int source = data_path.IR.decimal(7, 0);
+
                 data_path.master_bus.store(source);
                 data_path.B.load();
 
@@ -950,122 +1009,87 @@ public class Controller {
                 System.out.println(e);
             }
         }
-
-        public int advance () {
+        public int advance() {
             return NEXT;
         }
+
     }
 
-    public class SUBI1 extends RTN {
-        public String toString () {
-            return "SUBI1";
-        }
+    public class STUR1 extends RTN {
 
-        public void execute () {
+        public String toString() {
+            return new String("STUR1");
+        }
+        public void execute() {
             try {
                 int source = data_path.IR.decimal(15, 8);
-                data_path.master_bus.store(data_path.bank.decimal(source));
+                source = data_path.bank.decimal(source) + 4 * data_path.B.decimal();
 
-                data_path.alu.exec("0000", false);
 
-                System.out.println("Result:\t" + data_path.C.binary());
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        public int advance () {
-            return NEXT;
-        }
-    }
-
-    public class SUBI2 extends RTN {
-        public String toString () {
-            return "SUBI2";
-        }
-
-        public void execute () {
-            try {
-                int dest = data_path.IR.decimal(23, 16);
-                data_path.bank.load(dest, data_path.C.binary());
-            } catch (Exception e) {
-                System.out.println("Controller was not able to finish SUBI instruction");
-                System.out.println(e);
-            }
-
-        }
-
-        public int advance () {
-            return START;
-        }
-    }
-
-    /* -------------------------------------------------- ANDI ------------------------------------------------------*/
-    public class ANDI0 extends RTN {
-        public String toString () {
-            return "ANDI0";
-        }
-
-        public void execute () {
-            try {
-                int source = data_path.IR.decimal(7, 0);
-                data_path.master_bus.store(data_path.bank.decimal(source));
-                data_path.B.load();
-
-                System.out.println("B: " + data_path.B.binary());
-            } catch (Exception e) {
-                System.out.println(e);
-            }
-        }
-
-        public int advance () {
-            return NEXT;
-        }
-    }
-
-    public class ANDI1 extends RTN {
-        public String toString () {
-            return "ANDI1";
-        }
-
-        public void execute () {
-            try {
-                int source = data_path.IR.decimal(15, 8);
                 data_path.master_bus.store(source);
+                data_path.C.load();
 
-                data_path.alu.exec("0010", false);
-
-                System.out.println("Result:\t" + data_path.C.binary());
+                System.out.println("C: " + data_path.C.binary());
             } catch (Exception e) {
                 System.out.println(e);
             }
         }
-
-        public int advance () {
+        public int advance() {
             return NEXT;
         }
     }
 
-    public class ANDI2 extends RTN {
-        public String toString () {
-            return "ANDI2";
-        }
+    public class STUR2 extends RTN {
 
-        public void execute () {
+        public String toString() {
+            return new String("STUR2");
+        }
+        public void execute() {
             try {
-                int dest = data_path.IR.decimal(23, 16);
-                data_path.bank.load(dest, data_path.C.binary());
+                data_path.MA.store(data_path.C.decimal());
             } catch (Exception e) {
-                System.out.println("Controller was not able to finish ANDI instruction");
-                System.out.println(e);
+                System.out.println("Was not able to load data in MA");
+                e.printStackTrace();
             }
 
         }
-
-        public int advance () {
-            return START;
+        public int advance() {
+            return NEXT;
         }
     }
 
+    public class STUR3 extends RTN {
 
+        public String toString() {
+            return new String("STUR3");
+        }
+        public void execute() {
+            try {
+                int source = data_path.IR.decimal(23, 16);
+                source = data_path.bank.decimal(source);
+
+                data_path.MD.store(source);
+            } catch (Exception e) {
+                System.out.println("Was not able to load data in MD");
+                e.printStackTrace();
+            }
+
+        }
+        public int advance() {
+            return NEXT;
+        }
+    }
+
+    public class STUR4 extends RTN {
+
+        public String toString() {
+            return new String("STUR4");
+        }
+        public void execute() {
+                data_path.main_memory.memory_store();
+        }
+        public int advance() {
+            return START;
+        }
+    }
 }

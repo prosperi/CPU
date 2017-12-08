@@ -66,7 +66,7 @@ public class RAM extends JPanel implements ActionListener {
             memory[cnt] = new Byte();
         }
 
-        load_memory("./input/AND.as");  // load memory file
+        load_memory("./input/STUR.as");  // load memory file
         refresh_display();            // redraw the display
     }
 
@@ -221,9 +221,17 @@ public class RAM extends JPanel implements ActionListener {
 
         last_access = address;
 
+        for (int i = value.length(); i < byte_width * 2; i++) {
+            value = "0" + value;
+        }
+
         try {
             for(int cnt = 0; cnt < byte_width; cnt++) {
-                memory[address + cnt].store(value.substring((cnt*2), (cnt*2)+1));
+
+                String tmp_a = cnt * 2 >= value.length() ? "0" : value.charAt(cnt * 2) + "";
+                String tmp_b = (cnt * 2 + 1) >= value.length() ? "0" : value.charAt(cnt * 2 + 1) + "";
+
+                memory[address + cnt].store(tmp_a + tmp_b);
             }
         } catch (Exception e) {
             System.err.println("In RAM:setMemoryWord.");
