@@ -1,3 +1,7 @@
+/**
+ * Flags class keeps all of the 4 flags and updates
+ * them based on current Instruction
+ */
 public class Flags {
 
     private boolean _z, _c, _v, _n;
@@ -37,6 +41,9 @@ public class Flags {
         return _n;
     }
 
+    /**
+     * Reset flags
+     */
     public void reset () {
         _z = false;
         _c = false;
@@ -44,6 +51,10 @@ public class Flags {
         _n = false;
     }
 
+    /**
+     * Get String representation of the flags
+     * @return String
+     */
     public String toString () {
         String output = "";
 

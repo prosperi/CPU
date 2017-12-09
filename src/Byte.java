@@ -16,6 +16,11 @@ public class Byte {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  get hex representation of byte
+     * @return String
+     */
     public String hex() {
 
         int pow_value = 1;
@@ -32,6 +37,11 @@ public class Byte {
         return String.format("%02X", value);
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  get binary representation of byte
+     * @return String
+     */
     public String binary() {
 
         String result = "";
@@ -48,6 +58,13 @@ public class Byte {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  get binary representation of byte, given lower and upper bounds
+     * @param high - upper bound
+     * @param low - lower bound
+     * @return - String
+     */
     public String binary(int high, int low) {
 
         String result = "";
@@ -64,6 +81,12 @@ public class Byte {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  Store value inside byte, given integer
+     * @param value - int
+     * @throws Exception
+     */
     public void store(int value) throws Exception {
 
         // System.err.println("--" + value + "--");
@@ -76,6 +99,12 @@ public class Byte {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  Store value inside byte, given String
+     * @param value - String
+     * @throws Exception
+     */
     public void store(String value) throws Exception {
 
         // System.err.println("--" + value + "--");

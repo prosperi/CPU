@@ -39,6 +39,12 @@ public class RegisterBank {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     * load Register, given register_id
+     * @param register_id - int
+     * @throws Exception
+     */
     public void load(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -47,6 +53,13 @@ public class RegisterBank {
         registers[register_id].load();
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  load Register, given register_id and source in binary
+     * @param register_id - int
+     * @param source - String
+     * @throws Exception
+     */
     public void load(int register_id, String source) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -55,6 +68,12 @@ public class RegisterBank {
         registers[register_id].load(source);
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  store Register, given register_id
+     * @param register_id - int
+     * @throws Exception
+     */
     public void store(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -63,6 +82,12 @@ public class RegisterBank {
         registers[register_id].store();
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  increment value in Register, given register_id
+     * @param register_id - int
+     * @throws Exception
+     */
     public void increment(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -71,6 +96,12 @@ public class RegisterBank {
         registers[register_id].increment();
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  negate value in Register, given register_id
+     * @param register_id - int
+     * @throws Exception
+     */
     public void negate(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -80,6 +111,12 @@ public class RegisterBank {
     }
 
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  get binary representation of value in Register, given register_id
+     * @param register_id - int
+     * @throws Exception
+     */
     public String binary(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -88,6 +125,12 @@ public class RegisterBank {
         return registers[register_id].binary();
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  get decimal representation of value in Register, given register_id
+     * @param register_id - int
+     * @throws Exception
+     */
     public int decimal(int register_id) throws Exception {
         if (register_id < 0 || register_cnt <= register_id)
             throw new Exception("RegisterBank decimal register_id out of range.");
@@ -95,6 +138,12 @@ public class RegisterBank {
         return registers[register_id].decimal();
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  get hex representation of value in Register, given register_id
+     * @param register_id - int
+     * @throws Exception
+     */
     public String hex(int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -103,6 +152,13 @@ public class RegisterBank {
         return registers[register_id].hex();
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  store value in Register, given register id
+     * @param value  - int
+     * @param register_id - int
+     * @throws Exception
+     */
     public void store(int value, int register_id) throws Exception {
 
         if(register_id < 0 || register_cnt <= register_id)
@@ -111,10 +167,14 @@ public class RegisterBank {
         registers[register_id].store(value);
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  store binary value in Register, given register id
+     * @param value  - String
+     * @param register_id - int
+     * @throws Exception
+     */
     public void store(String value, int register_id) throws Exception {
-
-        System.out.println("Storing:\tID:\t" + register_id +"\tValue\t:" + value);
-
 
         if(register_id < 0 || register_cnt <= register_id)
             throw new Exception("RegisterBank store(str) register_id out of range.");

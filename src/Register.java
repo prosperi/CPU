@@ -32,6 +32,10 @@ public class Register {
         destination = bus;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  load data in register based on the source
+     */
     public void load() {
 
         for(int cnt = 0; cnt < wordsize; cnt++) {
@@ -39,6 +43,10 @@ public class Register {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu
+     *  load data in register with given source in binary
+     */
     public void load (String source) throws Exception{
 
         if (source.length() != wordsize)
@@ -49,6 +57,10 @@ public class Register {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  store data in destination
+     */
     public void store() {
         for(int cnt = 0; cnt < wordsize; cnt++) {
             destination.bits[cnt] = bits[cnt];
@@ -60,6 +72,11 @@ public class Register {
         increment(1);
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     * increase data in register with provided number
+     * @param times - int
+     */
     public void increment(int times) {
 
         for(int cnt = 0; cnt < times; cnt++) {
@@ -80,6 +97,10 @@ public class Register {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  negate the value stored in register
+     */
     public void negate() {
 
         for(int cnt = 0; cnt < wordsize; cnt++) {
@@ -94,6 +115,11 @@ public class Register {
         increment();
     }
 
+    /**
+     * @author mestiasz@lafayette.edu  - just added description
+     *  get decimal representation of stored value in register
+     * @return - int
+     */
     public int decimal() {
 
         int pow_value = 1;
@@ -110,6 +136,14 @@ public class Register {
         return value;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu  - just added description
+     *  get decimal representation of stored value in register given lower
+     * and upper bounds
+     * @param low - lower bound
+     * @param high - upper bound
+     * @return - int
+     */
     public int decimal(int high, int low) throws Exception {
 
         String result = "";
@@ -129,6 +163,11 @@ public class Register {
         return value;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu  - just added description
+     *  get hex representation of stored value in register
+     * @return - String
+     */
     public String hex() {
 
         int pow_value = 1;
@@ -145,6 +184,11 @@ public class Register {
         return String.format("%02X", value);
     }
 
+    /**
+     * @author mestiasz@lafayette.edu  - just added description
+     *  get binary representation of stored value in register
+     * @return - String
+     */
     public String binary() {
 
         String result = "";
@@ -161,6 +205,14 @@ public class Register {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu  - just added description
+     *  get binary representation of stored value in register given lower
+     * and upper bounds
+     * @param low - lower bound
+     * @param high - upper bound
+     * @return - String
+     */
     public String binary(int high, int low) throws Exception {
 
         String result = "";
@@ -181,6 +233,11 @@ public class Register {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu  - just added description
+     *  Store value in register, given integer
+     * @param value - int
+     */
     public void store(int value) {
 
         for(int index = 0; index < bits.length; index++) {
@@ -189,6 +246,11 @@ public class Register {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu  - just added description
+     *  Store value in register, given binary representation
+     * @param value - String
+     */
     public void store(String value) {
 
         int int_value = Integer.parseInt(value, 16);

@@ -316,8 +316,13 @@ public class Controller {
     }
 
 
-    /* -------------------------------------------------- ADD ------------------------------------------------------*/
+    /* -------------------------------------------------- ADD: 3 ------------------------------------------------------*/
 
+    /**
+     * RTN for ADD instruction,
+     * reads the second operand, gets the register from register bank,
+     * stores in bus and calls ALU operation with ALU control 0000
+     */
     public class ADD extends RTN {
 
         private String _type;
@@ -352,8 +357,12 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- SUB ------------------------------------------------------*/
-
+    /* -------------------------------------------------- SUB: 4 ------------------------------------------------------*/
+    /**
+     * RTN for SUB instruction,
+     * reads the second operand, gets the register from register bank,
+     * stores in bus and calls ALU operation with ALU control 0001
+     */
     public class SUB extends RTN {
         private String _type;
         private boolean _flags;
@@ -386,8 +395,12 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- AND ------------------------------------------------------*/
-
+    /* -------------------------------------------------- AND: 5 ------------------------------------------------------*/
+    /**
+     * RTN for AND instruction,
+     * reads the second operand, gets the register from register bank,
+     * stores in bus and calls ALU operation with ALU control 0010
+     */
     public class AND extends RTN {
         private String _type;
 
@@ -418,9 +431,13 @@ public class Controller {
     }
 
 
-    /* -------------------------------------------------- ORR ------------------------------------------------------*/
+    /* -------------------------------------------------- ORR: 6 ------------------------------------------------------*/
 
-
+    /**
+     * RTN for ORR instruction,
+     * reads the second operand, gets the register from register bank,
+     * stores in bus and calls ALU operation with ALU control 0011
+     */
     public class ORR extends RTN {
         private String _type;
 
@@ -451,8 +468,12 @@ public class Controller {
     }
 
 
-    /* -------------------------------------------------- EOR ------------------------------------------------------*/
-
+    /* -------------------------------------------------- EOR: 7 ------------------------------------------------------*/
+    /**
+     * RTN for EOR instruction,
+     * reads the second operand, gets the register from register bank,
+     * stores in bus and calls ALU operation with ALU control 0100
+     */
     public class EOR extends RTN {
         private String _type;
 
@@ -482,8 +503,13 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- LSL ------------------------------------------------------*/
-
+    /* -------------------------------------------------- LSL: 8 ------------------------------------------------------*/
+    /**
+     * RTN for LSL instruction,
+     * reads the first operand, stores in B register,
+     * reads the second operand, gets the register from register bank,
+     * stores in bus and calls ALU operation with ALU control 0101
+     */
     public class LSL0 extends RTN {
         public String toString () {
             return "LSL0";
@@ -529,8 +555,13 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- LSR ------------------------------------------------------*/
-
+    /* -------------------------------------------------- LSR: 9 ------------------------------------------------------*/
+    /**
+     * RTN for LSR instruction,
+     * reads the first operand, stores in B register,
+     * reads the second operand, gets the register from register bank,
+     * stores in bus and calls ALU operation with ALU control 0110
+     */
     public class LSR0 extends RTN {
         public String toString () {
             return "LSR0";
@@ -576,7 +607,10 @@ public class Controller {
         }
     }
 
-
+    /**
+     * RTN for R-TYPE instructions, the first step
+     * reads the first operand, stores in B register
+     */
     public class RSTART extends RTN {
 
         private String _type;
@@ -613,6 +647,10 @@ public class Controller {
         }
     }
 
+    /**
+     * RTN for R-TYPE instructions, the last step
+     * stores result in destination
+     */
     public class RFINISH extends RTN {
         private String _type;
 
@@ -640,7 +678,12 @@ public class Controller {
     }
 
 
-    /* -------------------------------------------------- LDUR ------------------------------------------------------*/
+    /* -------------------------------------------------- LDUR: 10 ------------------------------------------------------*/
+    /**
+     * RTN for LDUR instruction, loads first operand in B register,
+     * on next step, reads second operand and calculates the offset,
+     * updates MA and MD, and stores MD in destination
+     */
     public class LDUR0 extends RTN {
 
         public String toString() {
@@ -743,7 +786,13 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- STUR ------------------------------------------------------*/
+    /* -------------------------------------------------- STUR: 11 ------------------------------------------------------*/
+
+    /**
+     * RTN for STUR instruction, reads first operand and stores in B,
+     * on next step calculates the destination, updates MA, and then MD
+     * based on third operand, Finally stores the value using MA and MD
+     */
     public class STUR0 extends RTN {
 
         public String toString() {
@@ -845,8 +894,12 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- B ------------------------------------------------------*/
+    /* -------------------------------------------------- B: 12 ------------------------------------------------------*/
 
+    /**
+     * RTN for B instructon, reads first operand calculates offset
+     * using ALU, on the last step updates PC with new value
+     */
     public class B0 extends RTN {
 
         public String toString() {
@@ -906,8 +959,12 @@ public class Controller {
 
     }
 
-    /* -------------------------------------------------- BR ------------------------------------------------------*/
+    /* -------------------------------------------------- BR: 13 ------------------------------------------------------*/
 
+    /**
+     * RTN for BR instructon, reads first operand
+     * on the second step updates PC with new value
+     */
     public class BR0 extends RTN {
 
         public String toString() {
@@ -945,8 +1002,12 @@ public class Controller {
 
     }
 
-    /* -------------------------------------------------- CBZ ------------------------------------------------------*/
+    /* -------------------------------------------------- CBZ: 14 ------------------------------------------------------*/
 
+    /**
+     * RTN for CBZ, second step, reads the second operand, executes
+     * ALU operation to check value with zero and update PC
+     */
     public class CBZ extends RTN {
 
         public String toString() {
@@ -971,8 +1032,11 @@ public class Controller {
 
     }
 
-    /* -------------------------------------------------- CBNZ ------------------------------------------------------*/
-
+    /* -------------------------------------------------- CBNZ: 15 ------------------------------------------------------*/
+    /**
+     * RTN for CBNZ, second step, reads the second operand, executes
+     * ALU operation to check value with zero and update PC
+     */
     public class CBNZ extends RTN {
 
         public String toString() {
@@ -997,6 +1061,10 @@ public class Controller {
 
     }
 
+    /**
+     * RTN for CBZ and CBNZ, first step, reads the first operand,
+     * stores in B
+     */
     public class CBSTART extends RTN {
 
         String _type;
@@ -1026,6 +1094,10 @@ public class Controller {
 
     }
 
+    /**
+     * RTN for CBZ and CBNZ, last step, updates the PC, and branches if
+     * condition is met
+     */
     public class CBFINISH extends RTN {
 
         String _type;
@@ -1045,8 +1117,12 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- BEQ ------------------------------------------------------*/
+    /* -------------------------------------------------- BEQ: 16 ------------------------------------------------------*/
 
+    /**
+     * RTN for BEQ instruction, calls ALU operation and updates C
+     * based on the ALU operation result
+     */
     public class BEQ extends RTN {
         public String toString () {
             return new String("BEQ1");
@@ -1069,8 +1145,11 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- BNE ------------------------------------------------------*/
-
+    /* -------------------------------------------------- BNE: 17 ------------------------------------------------------*/
+    /**
+     * RTN for BNE instruction, calls ALU operation and updates C
+     * based on the ALU operation result
+     */
     public class BNE extends RTN {
         public String toString () {
             return new String("BNE1");
@@ -1093,8 +1172,11 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- BLT ------------------------------------------------------*/
-
+    /* -------------------------------------------------- BLT: 18 ------------------------------------------------------*/
+    /**
+     * RTN for BLT instruction, calls ALU operation and updates C
+     * based on the ALU operation result
+     */
     public class BLT extends RTN {
         public String toString () {
             return new String("BLT1");
@@ -1117,8 +1199,11 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- BLE ------------------------------------------------------*/
-
+    /* -------------------------------------------------- BLE: 19 ------------------------------------------------------*/
+    /**
+     * RTN for BLE instruction, calls ALU operation and updates C
+     * based on the ALU operation result
+     */
     public class BLE extends RTN {
         public String toString () {
             return new String("BLE1");
@@ -1141,8 +1226,11 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- BGT ------------------------------------------------------*/
-
+    /* -------------------------------------------------- BGT: 20 ------------------------------------------------------*/
+    /**
+     * RTN for BGT instruction, calls ALU operation and updates C
+     * based on the ALU operation result
+     */
     public class BGT extends RTN {
         public String toString () {
             return new String("BGT1");
@@ -1165,8 +1253,11 @@ public class Controller {
         }
     }
 
-    /* -------------------------------------------------- BGE ------------------------------------------------------*/
-
+    /* -------------------------------------------------- BGE: 21 ------------------------------------------------------*/
+    /**
+     * RTN for BGE instruction, calls ALU operation and updates C
+     * based on the ALU operation result
+     */
     public class BGE extends RTN {
         public String toString () {
             return new String("BGE1");
@@ -1189,6 +1280,10 @@ public class Controller {
         }
     }
 
+    /**
+     * RTN for conditional branches, first step, reads the first operand,
+     * transfers onto bus, and stores in B
+     */
     public class BCONDSTART extends RTN {
 
         String _type;
@@ -1218,6 +1313,10 @@ public class Controller {
 
     }
 
+    /**
+     * RTN for Conditional Branches, last step, updates the PC, and branches if
+     * condition is met
+     */
     public class BCONDFINISH extends RTN {
         String _type;
 

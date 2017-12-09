@@ -1,3 +1,9 @@
+/**
+ * ALU class represent Arithmetic Logic Unit
+ * Performs following operations: add, sub, orr, eor,
+ * and, lsl, lsr, cbz, cbnz, beq, bne, bge, bgt, ble, blt
+ */
+
 public class ALU {
 
     private Register _source_a, _dest_c;
@@ -25,6 +31,10 @@ public class ALU {
         _flags = f;
     }
 
+    /**
+     *  AND operation, ALU fetches data from the bus and
+     *  writes result in register C
+     */
     public void and () {
         String _source_b =  _bus.binary();
 
@@ -45,6 +55,10 @@ public class ALU {
         }
     }
 
+    /**
+     *  OR operation, ALU fetches data from the bus and
+     *  writes result in register C
+     */
     public void orr () {
         String _source_b =  _bus.binary();
 
@@ -64,6 +78,10 @@ public class ALU {
         }
     }
 
+    /**
+     *  Exclusive OR operation, ALU fetches data from the bus and
+     *  writes result in register C
+     */
     public void eor () {
         String _source_b =  _bus.binary();
 
@@ -83,6 +101,10 @@ public class ALU {
         }
     }
 
+    /**
+     *  Left Shift operation, ALU fetches data from the bus and
+     *  writes result in register C
+     */
     public void lsl () {
         String _source_b =  _bus.binary();
 
@@ -102,6 +124,10 @@ public class ALU {
         }
     }
 
+    /**
+     *  Right Shift operation, ALU fetches data from the bus and
+     *  writes result in register C
+     */
     public void lsr () {
         String _source_b =  _bus.binary();
 
@@ -121,6 +147,12 @@ public class ALU {
         }
     }
 
+    /**
+     *  ADD operation, ALU fetches data from the bus and
+     *  writes result in register C, checks for flags and
+     *  sets them based on the argument passed to function
+     *  @param flags - true if flags are supposed to be set
+     */
     public void add (boolean flags) {
         String _source_b =  _bus.binary();
 
@@ -150,6 +182,12 @@ public class ALU {
 
     }
 
+    /**
+     *  SUB operation, ALU fetches data from the bus and
+     *  writes result in register C, checks for flags and
+     *  sets them based on the argument passed to function
+     *  @param flags - true if flags are supposed to be set
+     */
     public void sub (boolean flags) {
         String _source_b =  _bus.binary();
 
@@ -178,6 +216,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  CBZ operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not, sets flags
+     */
     public void cbz () {
         String _source_b =  _bus.binary();
 
@@ -203,6 +246,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  CBNZ operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not, sets flags
+     */
     public void cbnz () {
         String _source_b =  _bus.binary();
 
@@ -229,6 +277,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  BEQ operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not
+     */
     public void beq () {
         String _source_b =  _bus.binary();
 
@@ -253,6 +306,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  BNE operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not
+     */
     public void bne () {
         String _source_b =  _bus.binary();
 
@@ -277,6 +335,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  BLT operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not
+     */
     public void blt () {
         String _source_b =  _bus.binary();
 
@@ -301,6 +364,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  BLE operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not
+     */
     public void ble () {
         String _source_b =  _bus.binary();
 
@@ -325,6 +393,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  BGT operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not
+     */
     public void bgt () {
         String _source_b =  _bus.binary();
 
@@ -349,6 +422,11 @@ public class ALU {
         }
     }
 
+    /**
+     *  BGE operation, ALU fetched data from bus, and sets offset
+     *  that later is used by instruction to decide whether to branch
+     *  or not
+     */
     public void bge () {
         String _source_b =  _bus.binary();
 
@@ -373,7 +451,12 @@ public class ALU {
     }
 
 
-
+    /**
+     * Execute ALU operation based on the passed ALU control
+     * @param control - 4 bit String
+     * @param flags - boolean value for setting flags,
+     *              true - if flags should be set
+     */
     public void exec (String control, boolean flags) {
         switch (control) {
             case "0000":

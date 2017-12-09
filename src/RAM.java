@@ -66,6 +66,7 @@ public class RAM extends JPanel implements ActionListener {
             memory[cnt] = new Byte();
         }
 
+        // mestiasz@lafayette.edu - changed test file
         load_memory("./input/ADD.as");  // load memory file
         refresh_display();            // redraw the display
     }
@@ -124,6 +125,9 @@ public class RAM extends JPanel implements ActionListener {
 
                 if(curr_line.length() == 0) continue;    // skip blank lines
 
+                // mestiasz@lafayette.edu
+                // used to work only when byte_width was 2, for other values need to be changed
+                // to following statement
                 for(int cnt = 0; cnt < byte_width * 2; cnt += 2 ) {
                     memory[(line_cnt * byte_width) + (cnt / 2)].store(
                             String.format("%c%c",
@@ -188,6 +192,12 @@ public class RAM extends JPanel implements ActionListener {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     * get Word from memory with given address
+     * @param address - int
+     * @return word - String
+     */
     public String getMemoryWord_binary(int address) {
 
         String result = "";
@@ -202,6 +212,12 @@ public class RAM extends JPanel implements ActionListener {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     * get Word from memory with given address in hex
+     * @param address - int
+     * @return word - String
+     */
     public String getMemoryWord_hex(int address) {
 
         String result = "";
@@ -217,17 +233,26 @@ public class RAM extends JPanel implements ActionListener {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu
+     * set Word in memory with given address and value
+     * @param address - int
+     * @param value - String
+     */
     public void setMemoryWord(int address, String value) {
 
         last_access = address;
 
+        // mestiasz@lafayette.edu
+        // add 0s in front to get to wordsize in hex
         for (int i = value.length(); i < byte_width * 2; i++) {
             value = "0" + value;
         }
 
         try {
             for(int cnt = 0; cnt < byte_width; cnt++) {
-
+                // mestiasz@lafayette.edu
+                // Remove substring, and replace with charAt as it used to return wrong value
                 String tmp_a = cnt * 2 >= value.length() ? "0" : value.charAt(cnt * 2) + "";
                 String tmp_b = (cnt * 2 + 1) >= value.length() ? "0" : value.charAt(cnt * 2 + 1) + "";
 
@@ -249,6 +274,10 @@ public class RAM extends JPanel implements ActionListener {
         data_register = reg;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     * Load Data from memory based on current MA
+     */
     public void memory_load() {
 
         int address = address_register.decimal();
@@ -257,6 +286,10 @@ public class RAM extends JPanel implements ActionListener {
         data_register.store(getMemoryWord_hex(address));
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  store data in memory based on current MD and MA
+     */
     public void memory_store() {
         int address = address_register.decimal();
         setMemoryWord(address, data_register.hex());

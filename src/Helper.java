@@ -1,3 +1,7 @@
+/**
+ * Helper class provides all the arithmetic and logical operations
+ * that are used by ALU
+ */
 public final class Helper {
 
     private static int _wordsize;
@@ -6,6 +10,12 @@ public final class Helper {
         _wordsize = 16;
     }
 
+    /**
+     * ADD operation, add two numbers in binary
+     * @param a - first operand
+     * @param b - second operand
+     * @return sum - String
+     */
     public static String  ADD (String a, String b) {
         String output = "";
 
@@ -15,6 +25,7 @@ public final class Helper {
         int c = 0;
         char tmp_a, tmp_b;
 
+        // use carry and sum up two numbers
         for (int i = 0; i < a.length(); i++) {
             tmp_a = a.charAt(i);
             tmp_b = b.charAt(i);
@@ -35,9 +46,17 @@ public final class Helper {
         return new StringBuilder(output).reverse().toString();
     }
 
+    /**
+     * SUB operation, finds difference between two numbers in binary
+     * using 2's complement
+     * @param a - first operand
+     * @param b - second operand
+     * @return difference - String
+     */
     public static String  SUB (String a, String b) {
         String output;
 
+        // calculate with 2's complement
         b = NEGATE(b);
         b = ADD(b, ONE());
 
@@ -46,6 +65,12 @@ public final class Helper {
         return output;
     }
 
+    /**
+     * AND operation, performs AND between two numbers in binary
+     * @param a - first operand
+     * @param b - second operand
+     * @return and - String
+     */
     public static String  AND (String a, String b) {
         String output = "";
 
@@ -62,6 +87,12 @@ public final class Helper {
         return output;
     }
 
+    /**
+     * OR operation, performs OR between two numbers in binary
+     * @param a - first operand
+     * @param b - second operand
+     * @return or - String
+     */
     public static String  OR (String a, String b) {
         String output = "";
 
@@ -78,6 +109,12 @@ public final class Helper {
         return output;
     }
 
+    /**
+     * EOR operation, performs Exclusive OR between two numbers in binary
+     * @param a - first operand
+     * @param b - second operand
+     * @return eor - String
+     */
     public static String EOR (String a, String b) {
         String output = "";
 
@@ -94,6 +131,12 @@ public final class Helper {
         return output;
     }
 
+    /**
+     * LSL operation, performs left shift between two numbers in binary
+     * @param a - first operand
+     * @param b - second operand
+     * @return lsl - String
+     */
     public static String LSL (String a, String b) {
         String output = "";
 
@@ -109,7 +152,12 @@ public final class Helper {
 
         return output;
     }
-
+    /**
+     * LSR operation, performs right shift between two numbers in binary
+     * @param a - first operand
+     * @param b - second operand
+     * @return lsr - String
+     */
     public static String LSR (String a, String b) {
         String output = "";
 
@@ -126,6 +174,11 @@ public final class Helper {
         return output;
     }
 
+    /**
+     * NEGATE operation negates given number in binary
+     * @param a - number in binary
+     * @return negation - String
+     */
     public static String NEGATE (String a) {
         String output = "";
 
@@ -136,6 +189,10 @@ public final class Helper {
         return output;
     }
 
+    /**
+     * ONE provides 1 written in binary that is same size as wordsize
+     * @return one - String
+     */
     public static String ONE () {
         String output = "";
 
@@ -148,6 +205,10 @@ public final class Helper {
         return output;
     }
 
+    /**
+     * ZERO provides 0 written in binary that is same size as wordsize
+     * @return zero - String
+     */
     public static String ZERO () {
         String output = "";
 

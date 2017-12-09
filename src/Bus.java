@@ -20,6 +20,11 @@ public class Bus {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     * get hex representation of bits
+     * @return String
+     */
     public String hex() {
 
         int pow_value = 1;
@@ -36,6 +41,11 @@ public class Bus {
         return String.format("%02X", value);
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  get binary representation of bits
+     * @return String
+     */
     public String binary() {
 
         String result = "";
@@ -52,6 +62,14 @@ public class Bus {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     * get binary representation of bits given the lower and upper bounds
+     * @param high - upper bound
+     * @param low - lower bound
+     * @return - binary representation
+     * @throws Exception
+     */
     public String binary(int high, int low) throws Exception {
 
         String result = "";
@@ -72,9 +90,15 @@ public class Bus {
         return result;
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  Store value, given integer
+     * @param value - int
+     * @throws Exception
+     */
     public void store(int value) throws Exception {
 
-        System.err.println("--" + value + "--");
+        // System.err.println("--" + value + "--");
         if (value < 0 && 255 < value)
             throw new Exception("Passed value is too large for Bus");
 
@@ -84,6 +108,12 @@ public class Bus {
         }
     }
 
+    /**
+     * @author mestiasz@lafayette.edu - just added description
+     *  Store value, given String
+     * @param value - String
+     * @throws Exception
+     */
     public void store(String value) throws Exception {
 
         // System.err.println("--" + value + "--");

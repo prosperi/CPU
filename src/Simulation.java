@@ -10,6 +10,10 @@ public class Simulation {
     /* Object input fields */
     public static RAM    mem;
 
+    /**
+     * @author mestiasz@lafayette.edu - Changed wordsize to 32 and update byteWidth to 0x4
+     * @param args
+     */
     public static void main(String[] args) {
 
         //Schedule a job for the event dispatch thread:

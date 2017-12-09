@@ -18,6 +18,8 @@ public class CPU extends JPanel implements ActionListener {
     public  Register      PC, IR, MA, MD, B, C;
     public  RegisterBank  bank;
     public  Bus           master_bus;
+    // mestiasz@lafayette.edu
+    // add ALU and Flags
     public  ALU           alu;
     public  Flags         flags;
 
@@ -91,6 +93,8 @@ public class CPU extends JPanel implements ActionListener {
         MD.set_source_bus(master_bus);
         MD.set_destination_bus(master_bus);
 
+        // mestiasz@lafayette.edu
+        // set up B and C registers
         B.set_destination_bus(master_bus);
         B.set_source_bus(master_bus);
         C.set_destination_bus(master_bus);
@@ -166,6 +170,8 @@ public class CPU extends JPanel implements ActionListener {
             MA.store(0x0);
             MD.store(0x0);
 
+            // mestiasz@lafayette.edu
+            // reset all the flags
             flags.reset();
 
             for(int cnt = 0; cnt < general_purpose_reg_cnt; cnt++) {
@@ -219,6 +225,9 @@ public class CPU extends JPanel implements ActionListener {
             System.err.println("In CPU:build_display");
             System.err.println(e);
         }
+
+        // mestiasz@lafayette.edu
+        // Show flags on screen
 
         result += newline + "----- Flags -----" + newline;
         result += flags.toString();
