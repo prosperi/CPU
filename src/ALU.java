@@ -325,6 +325,53 @@ public class ALU {
         }
     }
 
+    public void bgt () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- BGT ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (!_flags.getZ() && _flags.getN() == _flags.getV()) {
+            res = _source_a.decimal() * 4;
+        }
+
+        System.out.println("Result:\t" + res);
+
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform BGT");
+            System.out.println(e);
+        }
+    }
+
+    public void bge () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- BGE ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (_flags.getN() == _flags.getV()) {
+            res = _source_a.decimal() * 4;
+        }
+
+        System.out.println("Result:\t" + res);
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform BGE");
+            System.out.println(e);
+        }
+    }
+
 
 
     public void exec (String control, boolean flags) {
@@ -367,6 +414,12 @@ public class ALU {
                 break;
             case "1100":
                 ble();
+                break;
+            case "1101":
+                bgt();
+                break;
+            case "1110":
+                bge();
                 break;
             default:
                 break;

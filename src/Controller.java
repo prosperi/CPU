@@ -184,6 +184,14 @@ public class Controller {
         control_memory[171] = new BLE1();
         control_memory[172] = new BLE2();
 
+        control_memory[175] = new BGT0();
+        control_memory[176] = new BGT1();
+        control_memory[177] = new BGT2();
+
+        control_memory[180] = new BGE0();
+        control_memory[181] = new BGE1();
+        control_memory[182] = new BGE2();
+
         control_memory[185] = new B0();
         control_memory[186] = new B1();
         control_memory[187] = new B2();
@@ -1532,7 +1540,7 @@ public class Controller {
 
     }
 
-    /* -------------------------------------------------- BLT ------------------------------------------------------*/
+    /* -------------------------------------------------- BLE ------------------------------------------------------*/
 
     public class BLE0 extends RTN {
 
@@ -1583,6 +1591,128 @@ public class Controller {
 
         public String toString () {
             return new String("BLE2");
+        }
+        public void execute() {
+            data_path.PC.increment(data_path.C.decimal());
+        }
+        public int advance() {
+            return START;
+        }
+
+    }
+
+    /* -------------------------------------------------- BGT ------------------------------------------------------*/
+
+    public class BGT0 extends RTN {
+
+        public String toString() {
+            return new String("BGT0");
+        }
+        public void execute() {
+            try {
+                int source = data_path.IR.decimal(23, 0);
+
+                data_path.master_bus.store(source - 1);
+                data_path.B.load();
+
+                System.out.println("B: " + data_path.B.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        public int advance() {
+            return NEXT;
+        }
+
+    }
+
+    public class BGT1 extends RTN {
+        public String toString () {
+            return new String("BGT1");
+        }
+
+        public void execute () {
+            try {
+                data_path.master_bus.store(2);
+
+                data_path.alu.exec("1101", false);
+
+                System.out.println("Result:\t" + data_path.C.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        public int advance() {
+            return NEXT;
+        }
+    }
+
+    public class BGT2 extends RTN {
+
+        public String toString () {
+            return new String("BGT2");
+        }
+        public void execute() {
+            data_path.PC.increment(data_path.C.decimal());
+        }
+        public int advance() {
+            return START;
+        }
+
+    }
+
+     /* -------------------------------------------------- BGE ------------------------------------------------------*/
+
+    public class BGE0 extends RTN {
+
+        public String toString() {
+            return new String("BGE0");
+        }
+        public void execute() {
+            try {
+                int source = data_path.IR.decimal(23, 0);
+
+                data_path.master_bus.store(source - 1);
+                data_path.B.load();
+
+                System.out.println("B: " + data_path.B.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        public int advance() {
+            return NEXT;
+        }
+
+    }
+
+    public class BGE1 extends RTN {
+        public String toString () {
+            return new String("BGE1");
+        }
+
+        public void execute () {
+            try {
+                data_path.master_bus.store(2);
+
+                data_path.alu.exec("1110", false);
+
+                System.out.println("Result:\t" + data_path.C.binary());
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+
+        public int advance() {
+            return NEXT;
+        }
+    }
+
+    public class BGE2 extends RTN {
+
+        public String toString () {
+            return new String("BGE2");
         }
         public void execute() {
             data_path.PC.increment(data_path.C.decimal());
