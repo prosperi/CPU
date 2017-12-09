@@ -1,6 +1,8 @@
 /***
  * Low-leve class for storing a single byte of information,
  * 8-bits.
+ *
+ * @author mestiasz@lafayette.edu  - added description
  */
 public class Byte {
 
@@ -17,7 +19,6 @@ public class Byte {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  get hex representation of byte
      * @return String
      */
@@ -38,8 +39,7 @@ public class Byte {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  get binary representation of byte
+     * get binary representation of byte
      * @return String
      */
     public String binary() {
@@ -59,8 +59,7 @@ public class Byte {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  get binary representation of byte, given lower and upper bounds
+     * get binary representation of byte, given lower and upper bounds
      * @param high - upper bound
      * @param low - lower bound
      * @return - String
@@ -82,8 +81,8 @@ public class Byte {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  Store value inside byte, given integer
+     *  Store value inside byte, given integer,  throw exception if
+     * provided value does not meet lower and upper bounds
      * @param value - int
      * @throws Exception
      */
@@ -100,8 +99,8 @@ public class Byte {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  Store value inside byte, given String
+     * Store value inside byte, given String, throw exception if
+     * provided String is not long enough
      * @param value - String
      * @throws Exception
      */

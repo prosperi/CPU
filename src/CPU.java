@@ -4,6 +4,11 @@ import javax.swing.*;
 
 /***
  * CPU simulation class, including visual representation.
+ *
+ * @author mestiasz@lafayette.edu
+ * set up B and C registers
+ * show flags
+ * reset flags
  */
 public class CPU extends JPanel implements ActionListener {
 

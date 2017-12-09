@@ -4,6 +4,8 @@ import javax.swing.*;
 
 /***
  * The class that initiates all other objects.
+ *
+ * @author mestiasz@lafayette.edu - changed wordsize, memory size and byte_width
  */
 public class Simulation {
 

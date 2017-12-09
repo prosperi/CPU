@@ -75,6 +75,9 @@ public class Controller {
     }
     public void load_cntl_code_1() {
 
+        // build control memory using following pattern
+        // 	Current entry = (Current Instruction Opcode(decimal) + 1) * 5
+
         control_memory[0] = new Fetch0();
         control_memory[1] = new Fetch1();
         control_memory[2] = new Fetch2();
@@ -322,6 +325,24 @@ public class Controller {
      * RTN for ADD instruction,
      * reads the second operand, gets the register from register bank,
      * stores in bus and calls ALU operation with ALU control 0000
+     *
+     *
+     *  ADD0: B <= R[IR<7..0>]
+     *  ADD1: C <= R[IR<15..8>] + B
+     *  ADD2: R[IR<23..16>] <= C
+     *
+     *  ADDS0: B <= R[IR<7..0>]
+     *  ADDS1: C <= R[IR<15..8>] + B
+     *  ADDS2: R[IR<23..16>] <= C
+     *
+     *  ADDI0: B <= IR<7..0>
+     *  ADDI1: C <= R[IR<15..8>] + B
+     *  ADDI2: R[IR<23..16>] <= C
+     *
+     *  ADDIS0: B <= IR<7..0>
+     *  ADDIS1: C <= R[IR<15..8>] + B
+     *  ADDIS2: R[IR<23..16>] <= C
+     *
      */
     public class ADD extends RTN {
 
@@ -362,6 +383,23 @@ public class Controller {
      * RTN for SUB instruction,
      * reads the second operand, gets the register from register bank,
      * stores in bus and calls ALU operation with ALU control 0001
+     *
+     * SUB0: B <= R[IR<7..0>]
+     * SUB1: C <= R[IR<15..8>] - B
+     * SUB2: R[IR<23..16>] <= C
+     *
+        SUBS0: B <= R[IR<7..0>]
+        SUBS1: C <= R[IR<15..8>] - B
+        SUBS2: R[IR<23..16>] <= C
+
+        SUBI0: B <= IR<7..0>
+        SUBI1: C <= R[IR<15..8>] - B
+        SUBI2: R[IR<23..16>] <= C
+
+        SUBIS0: B <= IR<7..0>
+        SUBIS1: C <= R[IR<15..8>] - B
+        SUBIS2: R[IR<23..16>] <= C
+
      */
     public class SUB extends RTN {
         private String _type;
@@ -400,6 +438,15 @@ public class Controller {
      * RTN for AND instruction,
      * reads the second operand, gets the register from register bank,
      * stores in bus and calls ALU operation with ALU control 0010
+     *
+     *  AND0: B <= R[IR<7..0>]
+     *  AND1: C <= R[IR<15..8>]  ∧ B
+     *  AND2: R[IR<23..16>] <= C
+     *
+        ANDI0: B <= IR<7..0>
+        ANDI1: C <= R[IR<15..8>]  ∧ B
+        ANDI2: R[IR<23..16>] <= C
+
      */
     public class AND extends RTN {
         private String _type;
@@ -437,6 +484,15 @@ public class Controller {
      * RTN for ORR instruction,
      * reads the second operand, gets the register from register bank,
      * stores in bus and calls ALU operation with ALU control 0011
+     *
+     *  ORR0: B <= R[IR<7..0>]
+     *  ORR1: C <= R[IR<15..8>]  ∨ B
+     *  ORR2: R[IR<23..16>] <= C
+     *
+        ORRI0: B <= IR<7..0>
+        ORRI1: C <= R[IR<15..8>]  ∨ B
+        ORRI2: R[IR<23..16>] <= C
+
      */
     public class ORR extends RTN {
         private String _type;
@@ -473,6 +529,14 @@ public class Controller {
      * RTN for EOR instruction,
      * reads the second operand, gets the register from register bank,
      * stores in bus and calls ALU operation with ALU control 0100
+     *
+     *   EOR0: B <= R[IR<7..0>]
+         EOR1: C <= R[IR<15..8>]  ⊕ B
+         EOR2: R[IR<23..16>] <= C
+
+         EORI0: B <= IR<7..0>
+         EORI1: C <= R[IR<15..8>]  ⊕ B
+         EORI2: R[IR<23..16>] <= C
      */
     public class EOR extends RTN {
         private String _type;
@@ -509,6 +573,11 @@ public class Controller {
      * reads the first operand, stores in B register,
      * reads the second operand, gets the register from register bank,
      * stores in bus and calls ALU operation with ALU control 0101
+     *
+     *
+         LSL0: B <= R[IR<7..0>]
+         LSL1: C <= R[IR<15..8>]  shl B
+         LSL2: R[IR<23..16>] <= C
      */
     public class LSL0 extends RTN {
         public String toString () {
@@ -561,6 +630,11 @@ public class Controller {
      * reads the first operand, stores in B register,
      * reads the second operand, gets the register from register bank,
      * stores in bus and calls ALU operation with ALU control 0110
+     *
+        LSR0: B <= R[IR<7..0>]
+        LSR1: C <= R[IR<15..8>]  shr B
+        LSR2: R[IR<23..16>] <= C
+
      */
     public class LSR0 extends RTN {
         public String toString () {
@@ -683,6 +757,13 @@ public class Controller {
      * RTN for LDUR instruction, loads first operand in B register,
      * on next step, reads second operand and calculates the offset,
      * updates MA and MD, and stores MD in destination
+     *
+         LDUR0: B <= IR<7..0>
+         LDUR1: C <= R [IR<15..8>] + 4 * B
+         LDUR2: MA <= C
+         LDUR3: Load MD
+         LDUR4: R [IR<23..16>]  <= MD
+
      */
     public class LDUR0 extends RTN {
 
@@ -792,6 +873,14 @@ public class Controller {
      * RTN for STUR instruction, reads first operand and stores in B,
      * on next step calculates the destination, updates MA, and then MD
      * based on third operand, Finally stores the value using MA and MD
+     *
+     *
+         STUR0: B <= IR<7..0>
+         STUR1: C <= R [IR<15..8>] + 4 * B
+         STUR2: MA <= C
+         STUR3: Load MD
+         STUR4: R [IR<23..16>]  <= MD
+
      */
     public class STUR0 extends RTN {
 
@@ -1007,6 +1096,11 @@ public class Controller {
     /**
      * RTN for CBZ, second step, reads the second operand, executes
      * ALU operation to check value with zero and update PC
+     *
+         CBZ0: B <= IR<15..0>
+         CBZ1: C <= R[IR<23..16>] = 0 → 4 * B
+         CBZ2: PC <= PC + C
+
      */
     public class CBZ extends RTN {
 
@@ -1036,6 +1130,12 @@ public class Controller {
     /**
      * RTN for CBNZ, second step, reads the second operand, executes
      * ALU operation to check value with zero and update PC
+     *
+     *
+         CBNZ0: B <= IR<15..0>
+         CBNZ1: C <= R[IR<23..16>] ≠ 0 → 4 * B
+         CBNZ2: PC <= PC + C
+
      */
     public class CBNZ extends RTN {
 
@@ -1122,6 +1222,11 @@ public class Controller {
     /**
      * RTN for BEQ instruction, calls ALU operation and updates C
      * based on the ALU operation result
+     *
+         BEQ0: B <= IR<23..0>
+         BEQ1: C :=  Z = 1 → B * 4
+         BEQ2: PC <= PC + C
+
      */
     public class BEQ extends RTN {
         public String toString () {
@@ -1149,6 +1254,12 @@ public class Controller {
     /**
      * RTN for BNE instruction, calls ALU operation and updates C
      * based on the ALU operation result
+     *
+     *
+         BNE0: B <= IR<23..0>
+         BNE1: C :=  Z = 0 → B * 4
+         BNE2: PC <= PC + C
+
      */
     public class BNE extends RTN {
         public String toString () {
@@ -1176,6 +1287,11 @@ public class Controller {
     /**
      * RTN for BLT instruction, calls ALU operation and updates C
      * based on the ALU operation result
+     *
+         BLT0: B <= IR<23..0>
+         BLT1: C :=  N ≠ V → B * 4
+         BLT2: PC <= PC + C
+
      */
     public class BLT extends RTN {
         public String toString () {
@@ -1203,6 +1319,11 @@ public class Controller {
     /**
      * RTN for BLE instruction, calls ALU operation and updates C
      * based on the ALU operation result
+     *
+         BLE0: B <= IR<23..0>
+         BLE1: C :=  ¬(Z = 0 ∧ N = V ) → B * 4
+         BLE2: PC <= PC + C
+
      */
     public class BLE extends RTN {
         public String toString () {
@@ -1230,6 +1351,11 @@ public class Controller {
     /**
      * RTN for BGT instruction, calls ALU operation and updates C
      * based on the ALU operation result
+     *
+         BGT0: B <= IR<23..0>
+         BGT1: C :=  (Z = 0 ∧ N = V ) → B * 4
+         BGT2: PC <= PC + C
+
      */
     public class BGT extends RTN {
         public String toString () {
@@ -1257,6 +1383,10 @@ public class Controller {
     /**
      * RTN for BGE instruction, calls ALU operation and updates C
      * based on the ALU operation result
+     *
+         BGE0: B <= IR<23..0>
+         BGE1: C :=  N = V  → B * 4
+         BGE2: PC <= PC + C
      */
     public class BGE extends RTN {
         public String toString () {

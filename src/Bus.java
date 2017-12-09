@@ -1,6 +1,8 @@
 /***
  *  Bus class used for temporarly storing
  *  values between registers.
+ *
+ *  mestiasz@lafayette.edu - added description
  */
 public class Bus {
 
@@ -21,7 +23,6 @@ public class Bus {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      * get hex representation of bits
      * @return String
      */
@@ -42,8 +43,7 @@ public class Bus {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  get binary representation of bits
+     * get binary representation of bits
      * @return String
      */
     public String binary() {
@@ -63,7 +63,6 @@ public class Bus {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      * get binary representation of bits given the lower and upper bounds
      * @param high - upper bound
      * @param low - lower bound
@@ -91,8 +90,8 @@ public class Bus {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  Store value, given integer
+     * Store value, given integer, throw exception if
+     * provided value does not meet lower and upper bounds
      * @param value - int
      * @throws Exception
      */
@@ -109,8 +108,8 @@ public class Bus {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  Store value, given String
+     * Store value, given String, throw exception if
+     * provided String is not long enough
      * @param value - String
      * @throws Exception
      */

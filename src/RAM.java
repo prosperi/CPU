@@ -14,6 +14,10 @@ import java.awt.event.*;
 
 /***
  * Memory simulation, including visual representation.
+ *
+ * @author mestiasz@lafayette.edu
+ * update storeMemoryWord
+ * provide documentation
  */
 public class RAM extends JPanel implements ActionListener {
 

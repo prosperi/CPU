@@ -3,6 +3,8 @@
  * Source and destination selection is implemented
  * here to control how the bus is manipulated by
  * this device.
+ *
+ * @author mestiasz@lafayette.edu - just added description
  */
 public class RegisterBank {
 
@@ -40,7 +42,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      * load Register, given register_id
      * @param register_id - int
      * @throws Exception
@@ -54,7 +55,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  load Register, given register_id and source in binary
      * @param register_id - int
      * @param source - String
@@ -69,7 +69,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  store Register, given register_id
      * @param register_id - int
      * @throws Exception
@@ -83,7 +82,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  increment value in Register, given register_id
      * @param register_id - int
      * @throws Exception
@@ -97,7 +95,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  negate value in Register, given register_id
      * @param register_id - int
      * @throws Exception
@@ -112,7 +109,6 @@ public class RegisterBank {
 
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  get binary representation of value in Register, given register_id
      * @param register_id - int
      * @throws Exception
@@ -126,7 +122,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  get decimal representation of value in Register, given register_id
      * @param register_id - int
      * @throws Exception
@@ -139,7 +134,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  get hex representation of value in Register, given register_id
      * @param register_id - int
      * @throws Exception
@@ -153,7 +147,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  store value in Register, given register id
      * @param value  - int
      * @param register_id - int
@@ -168,7 +161,6 @@ public class RegisterBank {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  store binary value in Register, given register id
      * @param value  - String
      * @param register_id - int

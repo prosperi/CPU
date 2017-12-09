@@ -2,6 +2,8 @@
 /***
  * Register class for implementing memory components
  * that hang together thru the bus.
+ *
+ * @author mestiasz@lafayette.edu  - just added description
  */
 public class Register {
 
@@ -33,7 +35,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  load data in register based on the source
      */
     public void load() {
@@ -44,7 +45,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu
      *  load data in register with given source in binary
      */
     public void load (String source) throws Exception{
@@ -58,7 +58,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      *  store data in destination
      */
     public void store() {
@@ -73,7 +72,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
      * increase data in register with provided number
      * @param times - int
      */
@@ -98,8 +96,7 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu - just added description
-     *  negate the value stored in register
+     *  negate the value stored in register, replacing 0s with 1s and vice versa
      */
     public void negate() {
 
@@ -116,7 +113,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu  - just added description
      *  get decimal representation of stored value in register
      * @return - int
      */
@@ -137,7 +133,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu  - just added description
      *  get decimal representation of stored value in register given lower
      * and upper bounds
      * @param low - lower bound
@@ -164,7 +159,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu  - just added description
      *  get hex representation of stored value in register
      * @return - String
      */
@@ -185,7 +179,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu  - just added description
      *  get binary representation of stored value in register
      * @return - String
      */
@@ -206,7 +199,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu  - just added description
      *  get binary representation of stored value in register given lower
      * and upper bounds
      * @param low - lower bound
@@ -234,7 +226,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu  - just added description
      *  Store value in register, given integer
      * @param value - int
      */
@@ -247,7 +238,6 @@ public class Register {
     }
 
     /**
-     * @author mestiasz@lafayette.edu  - just added description
      *  Store value in register, given binary representation
      * @param value - String
      */
