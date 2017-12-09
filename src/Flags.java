@@ -47,7 +47,7 @@ public class Flags {
     public String toString () {
         String output = "";
 
-        output = "Z:  " + _z + "\tC:  " + _c + "\tV:  " + _v + "\tN:  " + _n;
+        output = "Z:  " + (_z ? 1 : 0) + "   C:  " + (_c ? 1 : 0) + "   V:  " + (_v ? 1 : 0) + "   N:  " + (_n ? 1 : 0);
 
         return output;
     }

@@ -1,4 +1,3 @@
-import com.sun.javaws.exceptions.ErrorCodeResponseException;
 
 /***
  * Register class for implementing memory components

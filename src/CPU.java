@@ -220,6 +220,9 @@ public class CPU extends JPanel implements ActionListener {
             System.err.println(e);
         }
 
+        result += newline + "----- Flags -----" + newline;
+        result += flags.toString();
+
         return result;
     }
 
