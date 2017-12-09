@@ -178,9 +178,154 @@ public class ALU {
         }
     }
 
-    public void b () {
+    public void cbz () {
+        String _source_b =  _bus.binary();
 
+        System.out.println("----------- CBZ ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (_source_b.equals(Helper.ZERO())) {
+            res = _source_a.decimal() * 4;
+            _flags.z();
+        }
+
+        System.out.println("Result:\t" + res);
+
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform CBZ");
+            System.out.println(e);
+        }
     }
+
+    public void cbnz () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- CBNZ ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (!_source_b.equals(Helper.ZERO())) {
+            res = _source_a.decimal() * 4;
+        } else {
+            _flags.z();
+        }
+
+        System.out.println("Result:\t" + res);
+
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform CBNZ");
+            System.out.println(e);
+        }
+    }
+
+    public void beq () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- BEQ ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (_flags.getZ()) {
+            res = _source_a.decimal() * 4;
+        }
+
+        System.out.println("Result:\t" + res);
+
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform BEQ");
+            System.out.println(e);
+        }
+    }
+
+    public void bne () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- BNE ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (!_flags.getZ()) {
+            res = _source_a.decimal() * 4;
+        }
+
+        System.out.println("Result:\t" + res);
+
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform BNE");
+            System.out.println(e);
+        }
+    }
+
+    public void blt () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- BLT ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (_flags.getN() != _flags.getV()) {
+            res = _source_a.decimal() * 4;
+        }
+
+        System.out.println("Result:\t" + res);
+
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform BLT");
+            System.out.println(e);
+        }
+    }
+
+    public void ble () {
+        String _source_b =  _bus.binary();
+
+        System.out.println("----------- BLE ----------");
+        System.out.println("A:\t" + _source_a.binary());
+        System.out.println("Bus:\t" + _source_b);
+
+        int res = 0;
+        if (!(!_flags.getZ() && _flags.getN() == _flags.getV())) {
+            res = _source_a.decimal() * 4;
+        }
+
+        System.out.println("Result:\t" + res);
+
+
+        try {
+            _dest_c.store(res);
+            System.out.println(_dest_c.binary());
+        } catch (Exception e) {
+            System.out.println("ALU was not able to perform BLE");
+            System.out.println(e);
+        }
+    }
+
+
 
     public void exec (String control, boolean flags) {
         switch (control) {
@@ -204,6 +349,24 @@ public class ALU {
                 break;
             case "0110":
                 lsr();
+                break;
+            case "0111":
+                cbz();
+                break;
+            case "1000":
+                cbnz();
+                break;
+            case "1001":
+                beq();
+                break;
+            case "1010":
+                bne();
+                break;
+            case "1011":
+                blt();
+                break;
+            case "1100":
+                ble();
                 break;
             default:
                 break;

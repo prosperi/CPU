@@ -25,6 +25,18 @@ public class Flags {
         _n = true;
     }
 
+    public boolean getZ () {
+        return _z;
+    }
+
+    public boolean getV () {
+        return _v;
+    }
+
+    public boolean getN () {
+        return _n;
+    }
+
     public void reset () {
         _z = false;
         _c = false;
